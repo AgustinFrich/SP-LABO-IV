@@ -1,3 +1,5 @@
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +8,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'SPLabo4';
+  constructor(private auth: AuthService) {
+    auth.Cambio();
+  }
+  
 }

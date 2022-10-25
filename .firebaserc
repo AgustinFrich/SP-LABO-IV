@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "sp-labo4-friadenrich": {
+      "hosting": {
+        "SPLabo4": [
+          "sp-labo4-friadenrich"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "sp-labo4-friadenrich"
+  }
+}

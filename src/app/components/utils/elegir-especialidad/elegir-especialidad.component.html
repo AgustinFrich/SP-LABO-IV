@@ -1,0 +1,10 @@
+<div>
+    <div *ngFor="let e of especialidades; let i = index">
+        <input type="checkbox" value={{e.nombre}} (click)="tocar(e)" id={{i}}>
+        <label class="ms-2" for={{i}}>{{e.nombre}}</label>
+    </div>
+    <div *ngIf="permitirAniadir" class="d-flex">
+        <input [(ngModel)]="nuevo" class="form-control w-75" >
+        <button (click)="Aniadir()" class="btn btn-light w-25" >Añadir esp.</button>
+    </div>
+</div>
