@@ -1,27 +1,15 @@
 # SPLabo4
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+Al ingresar a la aplicación veremos dos opciones
+![image](https://user-images.githubusercontent.com/78209674/198199987-1336e47d-7d57-4f77-98d1-b001fbdc58c4.png)
 
-## Development server
+Si se elige registrarse:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+Si se elige ingrsar: 
+![image](https://user-images.githubusercontent.com/78209674/198200078-4b883fd9-f4bf-4b0d-99a6-8782bf4762d3.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Desde aquí se puede ingresar con alguno de los siguientes perfiles: 
+Administrador
+Especialista
+Paciente
