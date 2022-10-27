@@ -1,0 +1,19 @@
+.paciente {
+    background-image: url("../../../assets/PACIENTE-HOME.jpg");
+    background-size: cover;
+}
+
+.especialista {
+    background-image: url("../../../assets/DOCTOR-HOME.jpg");
+    background-size: cover;
+}
+
+.no-acortar {
+    --bs-gutter-x: 0;
+}
+
+.botones {
+    border-radius: 30px;
+    font-size: 5em;
+    border: 0.1em black solid;
+}

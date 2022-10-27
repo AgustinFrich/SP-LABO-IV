@@ -1,6 +1,7 @@
+<util-volver-inicio></util-volver-inicio>
 <div class="container adaptar" style="max-width: 500px;">
     <form [formGroup]="forma" (ngSubmit)="PostEspecialista()">
-        <h1>Registro de paciente</h1>
+        <h1>Registro de especialista</h1>
         <h3>Datos personales</h3>
         <div class="form-group">
             <p class="mb-1 mt-3">Nombre</p>
@@ -44,7 +45,7 @@
         </div>
         
         <div class="form-group">
-            <p class="mb-1 mt-3">Especialidad</p>
+            <p class="mb-1 mt-3">Especialidades</p>
         <app-elegir-especialidad [permitirAniadir]="true" (elegirEspecialidad)="ElegirEspecialidad($event)"></app-elegir-especialidad>
         <div  class="invalid">
             <small class="invalid"
@@ -55,7 +56,7 @@
         </div>
         <div class="form-group">
             <p class="mb-1 mt-3">Imagen de perfil</p>
-            <input type="file" formControlName="img-perfil" class="form-control" accept="image/png, image/gif, image/jpeg" >
+            <input type="file" formControlName="img-perfil" (change)="onFileSelected($event)" class="form-control" accept="image/png, image/gif, image/jpeg" >
             <div class="invalid">
                 <small class="invalid"
                 *ngIf="forma.controls['img-perfil'].errors !== null && forma.controls['img-perfil'].touched">

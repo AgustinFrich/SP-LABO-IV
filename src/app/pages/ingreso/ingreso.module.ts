@@ -7,16 +7,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LoginPacientesComponent } from './login-pacientes/login-pacientes.component';
-import { LoginEspecialistasComponent } from './login-especialistas/login-especialistas.component';
 import { RegistroEspecialistasComponent } from './registro-especialistas/registro-especialistas.component';
 import { RegistroPacientesComponent } from './registro-pacientes/registro-pacientes.component';
+import { RegistroTotalComponent } from './registro-total/registro-total.component';
 
 @NgModule({
   declarations: [
     LoginPacientesComponent,
-    LoginEspecialistasComponent,
     RegistroEspecialistasComponent,
-    RegistroPacientesComponent
+    RegistroPacientesComponent,
+    RegistroTotalComponent
   ],
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, UtilsModule

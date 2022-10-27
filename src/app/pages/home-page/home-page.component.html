@@ -1,7 +1,12 @@
-
-<div>
-    <button class="btn btn-success" [routerLink]="['registro/paciente']">REGISTRO PACIENTE</button>
-    <button class="btn btn-success" [routerLink]="['registro/especialista']">REGISTRO ESPECIALISTA</button>
-    <button class="btn btn-success" [routerLink]="['ingreso/especialista']">INGRESO ESPECIALISTA</button>
-    <button class="btn btn-success" [routerLink]="['ingreso/paciente']">INGRESO PACIENTE</button>
+<div *ngIf="registro; else elseDiv" class="w-100 h-100">
+    <div class="row w-100 h-100 no-acortar">
+        <button class="w-50 h100 paciente botones" [routerLink]="['registro/paciente']"></button>
+        <button class="w-50 h100 especialista botones" [routerLink]="['registro/especialista']"></button>
+    </div>
 </div>
+<ng-template #elseDiv>
+    <div class="row w-100 h-100 no-acortar">
+        <button class="btn btn-light botones h-100" style="width: 48%; margin: 0% 1%" [routerLink]="['ingreso']">INGRESAR</button>
+        <button class="btn btn-light botones h-100" style="width: 48%; margin: 0% 1%" (click)="registro = true;">REGISTRARSE</button>
+    </div>
+</ng-template>

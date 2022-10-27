@@ -17,6 +17,14 @@ import { ElegirEspecialidadComponent } from './components/utils/elegir-especiali
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { HomeEspecialistasComponent } from './pages/homes/home-especialistas/home-especialistas.component';
 import { HomePacientesComponent } from './pages/homes/home-pacientes/home-pacientes.component';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { LoadingComponent } from './components/utils/loading/loading.component';
+import { VolverInicioComponent } from './components/utils/volver-inicio/volver-inicio.component';
+import { HomeAdminsComponent } from './pages/homes/home-admins/home-admins.component';
+import { HabilitarUsuariosComponent } from './components/admin/habilitar-usuarios/habilitar-usuarios.component';
+import { CrearPacienteComponent } from './components/admin/crear-paciente/crear-paciente.component';
+import { CrearEspecialistaComponent } from './components/admin/crear-especialista/crear-especialista.component';
+import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.component';
 
 @NgModule({
   declarations: [
@@ -24,15 +32,21 @@ import { HomePacientesComponent } from './pages/homes/home-pacientes/home-pacien
     HomePageComponent,
     HomeEspecialistasComponent,
     HomePacientesComponent,
+    HomeAdminsComponent,
+    HabilitarUsuariosComponent,
+    CrearPacienteComponent,
+    CrearEspecialistaComponent,
+    CrearAdminComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule, ReactiveFormsModule, CommonModule,
-    FormsModule, IngresoModule, UtilsModule,
+    FormsModule, IngresoModule, UtilsModule, SweetAlert2Module.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage())
+    provideStorage(() => getStorage()),
+    provideFirebaseApp(() => initializeApp(environment.firebase, "Secondary")),
   ], exports: [],
   providers: [    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
 ],

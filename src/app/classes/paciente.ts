@@ -1,14 +1,10 @@
-export class Paciente {
-    nombre: string; 
-    apellido: string; 
-    edad: string ;
-    dni: string ;
+import { Usuario } from "./usuario";
+
+export class Paciente extends Usuario {
+
     obraSocial: string;
-    mail: string ;
-    password: string; 
-    imgPerfil: string; 
     imgSecundaria: string; 
-    perfil: string;
+
     constructor(
       nombre: string, 
       apellido: string, 
@@ -20,15 +16,10 @@ export class Paciente {
       imgPerfil: string,
       imgSecundaria: string
     ){
-      this.nombre = nombre;
-      this.apellido = apellido;
-      this.edad = edad;
+      super(nombre, apellido, edad, dni, mail, password, imgPerfil);
       this.obraSocial = obraSocial;
-      this.dni = dni;
-      this.mail = mail;
-      this.password = password;
-      this.imgPerfil = imgPerfil;
       this.imgSecundaria = imgSecundaria;
       this.perfil = "Paciente";
+      this.aprobado = true;
     }
 }

@@ -5,17 +5,34 @@ import { RegistroEspecialistasComponent } from './pages/ingreso/registro-especia
 import { RegistroPacientesComponent } from './pages/ingreso/registro-pacientes/registro-pacientes.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginEspecialistasComponent } from './pages/ingreso/login-especialistas/login-especialistas.component';
 import { HomeEspecialistasComponent } from './pages/homes/home-especialistas/home-especialistas.component';
+import { HomePacientesComponent } from './pages/homes/home-pacientes/home-pacientes.component';
+import { HabilitarUsuariosComponent } from './components/admin/habilitar-usuarios/habilitar-usuarios.component';
+import { HomeAdminsComponent } from './pages/homes/home-admins/home-admins.component';
+import { CrearEspecialistaComponent } from './components/admin/crear-especialista/crear-especialista.component';
+import { CrearPacienteComponent } from './components/admin/crear-paciente/crear-paciente.component';
+import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.component';
 
 const routes: Routes = [
   { path: "registro/paciente", component: RegistroPacientesComponent },
   { path: "registro/especialista", component: RegistroEspecialistasComponent },
-  { path: "ingreso/paciente", component: LoginPacientesComponent },
-  { path: "ingreso/especialista", component: LoginEspecialistasComponent },
+  
+  { path: "ingreso", component: LoginPacientesComponent },
+  
   { path: "home/esperando-validacion", component: EsperandoValidacionComponent },
+  
+  { path: "home/pacientes", component: HomePacientesComponent },
   { path: "home/especialistas", component: HomeEspecialistasComponent },
-  // { path: "home/paciente", component:  }
+  { path: "home/administradores", component: HomeAdminsComponent,
+    children: [
+      {path: "", redirectTo: "habilitar-especialistas", pathMatch: "full"},
+      { path: "habilitar-especialistas", component: HabilitarUsuariosComponent },
+      { path: "generar-especialista", component: CrearEspecialistaComponent },
+      { path: "generar-paciente", component: CrearPacienteComponent },
+      { path: "generar-admin", component: CrearAdminComponent }
+    ]
+  },
+
   { path: "**", component: HomePageComponent }
 ];
 

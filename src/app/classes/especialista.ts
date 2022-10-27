@@ -1,13 +1,6 @@
-export class Especialista {
-    nombre: string; 
-    apellido: string; 
-    edad: string ;
-    dni: string ;
-    mail: string ;
-    password: string; 
-    imgPerfil: string; 
-    aprobado: boolean;
-    perfil: string;
+import { Usuario } from "./usuario";
+
+export class Especialista extends Usuario {
     especialidad: string[];
     
     constructor(
@@ -20,13 +13,7 @@ export class Especialista {
       password: string, 
       imgPerfil: string 
     ){
-      this.nombre = nombre;
-      this.apellido = apellido;
-      this.edad = edad;
-      this.dni = dni;
-      this.mail = mail;
-      this.password = password;
-      this.imgPerfil = imgPerfil;
+      super(nombre, apellido, edad, dni, mail, password, imgPerfil);
       this.aprobado = false,
       this.perfil = "Especialista";
       this.especialidad = especialidad;
