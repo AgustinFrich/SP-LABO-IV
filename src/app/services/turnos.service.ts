@@ -25,10 +25,15 @@ export class TurnosService {
 
   getMisTurnos(usuario: Usuario) {
     const col = collection(this.fs, 'Turnos');
-    //if (usuario.perfil === 'Paciente') {
-    const q = query(col, where('paciente.mail', '==', usuario.mail));
-    return collectionData(q);
-    //}
+    if (usuario.perfil === 'Paciente') {
+      const q = query(col, where('paciente.mail', '==', usuario.mail));
+      return collectionData(q);
+    } else if (usuario.perfil === 'Especialista') {
+      const q = query(col, where('especialista.mail', '==', usuario.mail));
+      return collectionData(q);
+    } else {
+      return collectionData(col);
+    }
   }
 
   postTurno(
@@ -74,6 +79,27 @@ export class TurnosService {
     tunro.cancelado = true;
     tunro.estado = 'Cancelado';
     tunro.comentario = comentario;
+    updateDoc(ref, { ...tunro });
+  }
+  rechazarTurno(tunro: Turno, comentario: string) {
+    const ref = doc(this.fs, 'Turnos', tunro.id);
+    tunro.rechazado = true;
+    tunro.estado = 'Rechazado';
+    tunro.comentario = comentario;
+    updateDoc(ref, { ...tunro });
+  }
+  finalizarTurno(tunro: Turno, diagnositco: string, comentario: string) {
+    const ref = doc(this.fs, 'Turnos', tunro.id);
+    tunro.realizado = true;
+    tunro.estado = 'Realizado';
+    tunro.comentarioEspecialista = comentario;
+    tunro.diagnostico = diagnositco;
+    updateDoc(ref, { ...tunro });
+  }
+  aceptarTurno(tunro: Turno) {
+    const ref = doc(this.fs, 'Turnos', tunro.id);
+    tunro.aceptado = true;
+    tunro.estado = 'Aceptado';
     updateDoc(ref, { ...tunro });
   }
 }

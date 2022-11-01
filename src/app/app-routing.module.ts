@@ -55,6 +55,10 @@ const routes: Routes = [
         path: 'mi-perfil',
         component: MiPerfilComponent,
       },
+      {
+        path: 'mis-turnos',
+        component: MisTurnosComponent,
+      },
     ],
   },
   {
@@ -73,6 +77,7 @@ const routes: Routes = [
       { path: 'generar-especialista', component: CrearEspecialistaComponent },
       { path: 'generar-paciente', component: CrearPacienteComponent },
       { path: 'generar-admin', component: CrearAdminComponent },
+      { path: 'turnos', component: MisTurnosComponent },
     ],
   },
 

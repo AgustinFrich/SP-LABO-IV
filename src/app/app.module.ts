@@ -6,11 +6,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { provideStorage,getStorage } from '@angular/fire/storage';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ElegirEspecialidadComponent } from './components/utils/elegir-especialidad/elegir-especialidad.component';
@@ -28,7 +28,9 @@ import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
 import { MisTurnosComponent } from './components/turnos/mis-turnos/mis-turnos.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import { RecapthcaService } from './services/recapthca.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,20 +44,32 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
     CrearAdminComponent,
     SolicitarTurnoComponent,
     MisTurnosComponent,
-    MiPerfilComponent
+    MiPerfilComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule, ReactiveFormsModule, CommonModule,
-    FormsModule, IngresoModule, UtilsModule, SweetAlert2Module.forRoot(),
+    RecaptchaV3Module,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    IngresoModule,
+    UtilsModule,
+    SweetAlert2Module.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    provideFirebaseApp(() => initializeApp(environment.firebase, "Secondary")),
-  ], exports: [],
-  providers: [    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
-],
-  bootstrap: [AppComponent]
+    provideFirebaseApp(() => initializeApp(environment.firebase, 'Secondary')),
+  ],
+  exports: [],
+  providers: [
+    { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
+    {
+      provide: RECAPTCHA_V3_SITE_KEY,
+      useValue: environment.recaptcha.siteKey,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

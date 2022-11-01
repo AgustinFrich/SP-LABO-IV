@@ -13,6 +13,8 @@ export class Turno {
   rechazado: boolean;
   cancelado: boolean;
   comentario: string;
+  comentarioEspecialista: string;
+  diagnostico: string;
   estado: string;
   id: string;
   constructor(
@@ -32,5 +34,7 @@ export class Turno {
     this.estado = 'Solicitado';
     this.comentario = '';
     this.id = '';
+    this.diagnostico = '';
+    this.comentarioEspecialista = '';
   }
 }

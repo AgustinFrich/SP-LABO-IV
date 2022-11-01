@@ -3,7 +3,7 @@
     <h6>Filtrar por especialista</h6>
     <div *ngFor="let e of especialistas">
       <button class="btn btn-succes" (click)="filtrarPorEspecialista(e)">
-        {{ "Especialisa: " + e.nombre }}
+        {{ "Especialisa: " + e.nombre + " " + e.apellido }}
       </button>
     </div>
   </div>
@@ -13,41 +13,137 @@
       {{ "Especialidad: " + e.nombre }}
     </button>
   </div>
+  <div *ngFor="let p of pacientes">
+    <button class="btn btn-succes" (click)="filtrarPorPaciente(p)">
+      {{ "Paciente: " + p.nombre + p.apellido }}
+    </button>
+  </div>
 </div>
 
 <div class="container" style="max-width: 500px">
   <h1 style="text-align: center">Mis turnos</h1>
   <div *ngIf="auth.usuario">
-    <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
-      <p>{{ t.especialista.nombre + " " + t.especialista.apellido }}</p>
-      <p>{{ t.especialidad.nombre }}</p>
-      <h2>Estado: {{ t.estado }}</h2>
-      <button
-        class="btn btn-danger m-1"
-        *ngIf="!t.realizado && !t.cancelado"
-        (click)="cancelarTurno(t)"
-      >
-        Cancelar
-      </button>
-      <button
-        class="btn btn-info m-1"
-        *ngIf="t.comentario.length > 0"
-        (click)="verResenia(t.comentario)"
-      >
-        Ver reseña
-      </button>
-      <button
-        class="btn btn-success m-1"
-        *ngIf="t.comentario.length > 0 && t.realizado"
-      >
-        Completar encuesta
-      </button>
-      <button
-        class="btn btn-success m-1"
-        *ngIf="t.realizado && t.comentario.length === 0"
-      >
-        Calificar atención
-      </button>
+    <div *ngIf="auth.usuario.perfil === 'Paciente'">
+      <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
+        <p>{{ t.especialista.nombre + " " + t.especialista.apellido }}</p>
+        <p>{{ t.especialidad.nombre }}</p>
+        <p>
+          {{
+            t.horario.dia +
+              "/" +
+              t.horario.mes +
+              " - " +
+              t.horario.hora +
+              ":" +
+              t.horario.minuto
+          }}
+        </p>
+        <h2>Estado: {{ t.estado }}</h2>
+        <button
+          class="btn btn-danger m-1"
+          *ngIf="!t.realizado && !t.cancelado && !t.rechazado"
+          (click)="cancelarTurno(t)"
+        >
+          Cancelar
+        </button>
+        <button
+          class="btn btn-info m-1"
+          *ngIf="(t.cancelado || t.rechazado) && t.comentario.length > 0"
+          (click)="verResenia(t.comentario)"
+        >
+          Ver reseña
+        </button>
+        <button
+          class="btn btn-info m-1"
+          *ngIf="!t.cancelado && t.comentarioEspecialista.length > 0"
+          (click)="verDiagnostico(t.comentarioEspecialista, t.diagnostico)"
+        >
+          Ver reseña
+        </button>
+        <button
+          class="btn btn-success m-1"
+          *ngIf="t.comentario.length > 0 && t.realizado"
+        >
+          Completar encuesta
+        </button>
+        <button
+          class="btn btn-success m-1"
+          *ngIf="t.realizado && t.comentario.length === 0"
+        >
+          Calificar atención
+        </button>
+      </div>
+    </div>
+
+    <!--ESPECIALISTA-->
+    <div *ngIf="auth.usuario.perfil === 'Especialista'">
+      <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
+        <p>{{ t.paciente.nombre + " " + t.paciente.apellido }}</p>
+        <p>{{ t.paciente.obraSocial }}</p>
+        <h2>Estado: {{ t.estado }}</h2>
+        <button
+          class="btn btn-danger m-1"
+          *ngIf="!t.realizado && !t.cancelado && !t.aceptado && !t.rechazado"
+          (click)="cancelarTurno(t)"
+        >
+          Cancelar
+        </button>
+
+        <button
+          class="btn btn-danger m-1"
+          *ngIf="!t.realizado && !t.cancelado && !t.aceptado && !t.rechazado"
+          (click)="rechazarTurno(t)"
+        >
+          Rechazar
+        </button>
+
+        <button
+          class="btn btn-success m-1"
+          *ngIf="!t.realizado && !t.cancelado && !t.aceptado && !t.rechazado"
+          (click)="aceptarTurno(t)"
+        >
+          Aceptar
+        </button>
+
+        <button
+          class="btn btn-success m-1"
+          *ngIf="t.aceptado && !t.cancelado && !t.realizado"
+          (click)="finalizarTurno(t)"
+        >
+          Finalizar
+        </button>
+
+        <button
+          class="btn btn-info m-1"
+          *ngIf="(t.cancelado || t.rechazado) && t.comentario.length > 0"
+          (click)="verResenia(t.comentario)"
+        >
+          Ver reseña
+        </button>
+        <button
+          class="btn btn-info m-1"
+          *ngIf="!t.cancelado && t.comentarioEspecialista.length > 0"
+          (click)="verDiagnostico(t.comentarioEspecialista, t.diagnostico)"
+        >
+          Ver reseña
+        </button>
+      </div>
+    </div>
+
+    <!--ADMIN-->
+    <div *ngIf="auth.usuario.perfil === 'Admin'">
+      <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
+        <p>{{ t.paciente.nombre + " " + t.paciente.apellido }}</p>
+        <p>{{ t.paciente.obraSocial }}</p>
+        <h2>Estado: {{ t.estado }}</h2>
+        <button
+          class="btn btn-danger m-1"
+          *ngIf="!t.realizado && !t.cancelado && !t.aceptado && !t.rechazado"
+          (click)="cancelarTurno(t)"
+        >
+          Cancelar
+        </button>
+      </div>
     </div>
   </div>
 </div>

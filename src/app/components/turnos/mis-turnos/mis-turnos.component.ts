@@ -1,3 +1,4 @@
+import { Paciente } from './../../../classes/paciente';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Especialidad } from 'src/app/classes/especialidad';
@@ -18,6 +19,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   turnosFiltrados: Turno[] = [];
   especialistas: Especialista[] = [];
   especialidades: Especialidad[] = [];
+  pacientes: Paciente[] = [];
 
   private unsub: Subscription = new Subscription();
   constructor(
@@ -27,8 +29,6 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    console.log('Entro');
-
     this.unsub = this.turnosService
       .getMisTurnos(this.auth.usuario!)
       .subscribe((doc) => {
@@ -42,6 +42,9 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
         this.utils.getEspecialidades().forEach((esp) => {
           this.especialidades = esp as Especialidad[];
         });
+        this.utils.getPacientes().forEach((pac) => {
+          this.pacientes = pac as Paciente[];
+        });
       });
   }
 
@@ -50,7 +53,20 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
     this.unsub.unsubscribe();
   }
   verResenia(resenia: string) {
-    Swal.fire('Reseña de la atención: ', '"' + resenia + '"', 'info');
+    Swal.fire('Comentario del turno: ', '"' + resenia + '"', 'info');
+  }
+
+  verDiagnostico(resenia: string, diagnostico: string) {
+    Swal.fire(
+      'Información de la atención: ',
+      'Diagnóstico: "' +
+        diagnostico +
+        '"<br/>' +
+        'Comentario: "' +
+        resenia +
+        '"',
+      'info'
+    );
   }
 
   cancelarTurno(turno: Turno) {
@@ -77,6 +93,80 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
     });
   }
 
+  rechazarTurno(turno: Turno) {
+    Swal.fire({
+      title: 'Describa el motivo de rechazo',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonText: 'Recharar turno',
+      cancelButtonText: 'No rechazar turno',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.value.length !== 0) {
+          this.turnosService.rechazarTurno(turno, result.value);
+        } else {
+          Swal.fire(
+            'Error',
+            'No ingresó un comentario, no se rechazó el turno',
+            'warning'
+          );
+        }
+      }
+    });
+  }
+
+  aceptarTurno(turno: Turno) {
+    this.turnosService.aceptarTurno(turno);
+  }
+
+  finalizarTurno(turno: Turno) {
+    Swal.fire({
+      title: 'Describa el diagnóstico realizado',
+      input: 'text',
+      showCancelButton: true,
+      confirmButtonText: 'Continuar',
+      cancelButtonText: 'Cancelar',
+      showLoaderOnConfirm: true,
+      allowOutsideClick: () => !Swal.isLoading(),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (result.value.length !== 0) {
+          Swal.fire({
+            title: 'Escriba una reseña sobre la consulta',
+            input: 'text',
+            showCancelButton: true,
+            confirmButtonText: 'Finalizar',
+            cancelButtonText: 'Cancelar',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: () => !Swal.isLoading(),
+          }).then((result2) => {
+            if (result2.value.length !== 0) {
+              this.turnosService.finalizarTurno(
+                turno,
+                result.value,
+                result2.value
+              );
+            } else {
+              Swal.fire(
+                'Error',
+                'No ingresó una reseña, no se finalizó el turno',
+                'warning'
+              );
+            }
+          });
+        } else {
+          Swal.fire(
+            'Error',
+            'No ingresó un diagnóstico, no se finalizó el turno',
+            'warning'
+          );
+        }
+      }
+    });
+  }
+
   filtrarPorEspecialista(especialista: Especialista) {
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.especialista.mail === especialista.mail;
@@ -85,6 +175,11 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   filtrarPorEspecialidad(especialidad: Especialidad) {
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.especialidad.nombre === especialidad.nombre;
+    });
+  }
+  filtrarPorPaciente(paciente: Paciente) {
+    this.turnosFiltrados = this.turnos.filter((t) => {
+      return t.paciente.nombre === paciente.nombre;
     });
   }
 }

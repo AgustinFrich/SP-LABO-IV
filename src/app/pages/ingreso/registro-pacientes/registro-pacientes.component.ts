@@ -1,33 +1,56 @@
 import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormControlName, FormGroup, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormControlName,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Paciente } from 'src/app/classes/paciente';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-registro-pacientes',
   templateUrl: './registro-pacientes.component.html',
-  styleUrls: ['./registro-pacientes.component.scss']
+  styleUrls: ['./registro-pacientes.component.scss'],
 })
-
 export class RegistroPacientesComponent implements OnInit {
   public forma!: FormGroup;
   imagenPerfil?: File;
   imagenSecundaria?: File;
+  reCAPTCHAToken: string = '';
+  tokenVisible: boolean = false;
 
-  constructor(public fb: FormBuilder, private auth: AuthService) {   }
+  constructor(
+    public fb: FormBuilder,
+    private auth: AuthService,
+    private recaptchaV3Service: ReCaptchaV3Service
+  ) {}
 
-  ngOnInit(): void 
-  {
+  ngOnInit(): void {
     this.forma = this.fb.group({
-      "nombre": ['', [Validators.required]],
-      "apellido": ['', [Validators.required]],
-      "edad": ['', [Validators.required,, Validators.min(18), Validators.max(99)]],
-      "dni": ['', [Validators.required, Validators.pattern('[0-9]*'), Validators.minLength(7), Validators.maxLength(8)]],
-      "obra": ['', [Validators.required]],
-      "mail": ['', [Validators.required, Validators.email]],
-      "password": ['', [Validators.required, Validators.minLength(8)]],
-      "img-perfil": ['', [Validators.required]],
-      "img-secundaria": ['', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      apellido: ['', [Validators.required]],
+      edad: [
+        '',
+        [Validators.required, , Validators.min(18), Validators.max(99)],
+      ],
+      dni: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern('[0-9]*'),
+          Validators.minLength(7),
+          Validators.maxLength(8),
+        ],
+      ],
+      obra: ['', [Validators.required]],
+      mail: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      'img-perfil': ['', [Validators.required]],
+      'img-secundaria': ['', [Validators.required]],
     });
   }
 
@@ -40,25 +63,21 @@ export class RegistroPacientesComponent implements OnInit {
       this.forma.value.dni,
       this.forma.value.mail,
       this.forma.value.password,
-      "",
-      ""
+      '',
+      ''
     );
-    this.auth.PostPaciente(
-      paciente, this.imagenPerfil, this.imagenSecundaria
-    );
+    this.auth.PostPaciente(paciente, this.imagenPerfil, this.imagenSecundaria);
   }
 
   onFileSelectedPerfil($event: any) {
-    if($event.target.files.length > 0)
-    {
-        this.imagenPerfil = $event.target.files[0];
+    if ($event.target.files.length > 0) {
+      this.imagenPerfil = $event.target.files[0];
     }
   }
 
   onFileSelectedSecundaria($event: any) {
-    if($event.target.files.length > 0)
-    {
-        this.imagenSecundaria = $event.target.files[0];
+    if ($event.target.files.length > 0) {
+      this.imagenSecundaria = $event.target.files[0];
     }
   }
 }

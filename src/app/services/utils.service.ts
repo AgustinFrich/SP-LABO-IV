@@ -42,6 +42,10 @@ export class UtilsService {
     const col = collection(this.fs, 'Especialidades');
     return collectionData(col);
   }
+  getPacientes() {
+    const col = collection(this.fs, 'Pacientes');
+    return collectionData(col);
+  }
 
   getEspecialistasNoAprobados() {
     const col = collection(this.fs, 'Especialistas');
