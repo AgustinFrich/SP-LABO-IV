@@ -1,0 +1,49 @@
+<div class="container" style="max-width: 500px">
+  <h1>Solicitud de turno</h1>
+  <h3>Paso 1. Elija la especialidad</h3>
+  <div class="d-flex" style="vertical-align: middle; flex-wrap: wrap">
+    <div *ngFor="let e of especialidades" class="boton">
+      <img
+        src="{{ e.imagen }}"
+        alt="{{ e.nombre }}"
+        width="100%"
+        (click)="elegirEspecialidad(e)"
+      />
+    </div>
+  </div>
+  <div [hidden]="especialidad === null">
+    <h3 class="mt-2">Paso 2. Elija a su especialista</h3>
+    <div class="d-flex" style="vertical-align: middle; flex-wrap: wrap">
+      <div *ngFor="let e of especialistasFiltrados" class="boton">
+        <div *ngIf="e.aprobado">
+          <h6 style="text-align: center" class="mt-2">{{ e.nombre }}</h6>
+          <img
+            src="{{ e.imgPerfil }}"
+            alt="{{ e.nombre }}"
+            width="100%"
+            (click)="elegirEspecialista(e)"
+          />
+        </div>
+      </div>
+    </div>
+    <div [hidden]="horarios === null">
+      <h3 class="mt-2">Paso 3. Elija el horario</h3>
+      <div *ngIf="horarios! !== null">
+        <div *ngFor="let h of horarios">
+          <div
+            class="card text-center"
+            style="vertical-align: middle; cursor: pointer"
+            (click)="elegirHorario(h)"
+          >
+            <p>{{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div [hidden]="horario === null">
+    <button class="btn btn-success" (click)="aceptarTurno()">
+      Pedir Turno
+    </button>
+  </div>
+</div>

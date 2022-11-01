@@ -1,0 +1,53 @@
+<div class="filtros">
+  <div *ngIf="auth.usuario!.perfil !== 'Especialista'">
+    <h6>Filtrar por especialista</h6>
+    <div *ngFor="let e of especialistas">
+      <button class="btn btn-succes" (click)="filtrarPorEspecialista(e)">
+        {{ "Especialisa: " + e.nombre }}
+      </button>
+    </div>
+  </div>
+  <h6>Filtrar por especialidad</h6>
+  <div *ngFor="let e of especialidades">
+    <button class="btn btn-succes" (click)="filtrarPorEspecialidad(e)">
+      {{ "Especialidad: " + e.nombre }}
+    </button>
+  </div>
+</div>
+
+<div class="container" style="max-width: 500px">
+  <h1 style="text-align: center">Mis turnos</h1>
+  <div *ngIf="auth.usuario">
+    <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
+      <p>{{ t.especialista.nombre + " " + t.especialista.apellido }}</p>
+      <p>{{ t.especialidad.nombre }}</p>
+      <h2>Estado: {{ t.estado }}</h2>
+      <button
+        class="btn btn-danger m-1"
+        *ngIf="!t.realizado && !t.cancelado"
+        (click)="cancelarTurno(t)"
+      >
+        Cancelar
+      </button>
+      <button
+        class="btn btn-info m-1"
+        *ngIf="t.comentario.length > 0"
+        (click)="verResenia(t.comentario)"
+      >
+        Ver reseña
+      </button>
+      <button
+        class="btn btn-success m-1"
+        *ngIf="t.comentario.length > 0 && t.realizado"
+      >
+        Completar encuesta
+      </button>
+      <button
+        class="btn btn-success m-1"
+        *ngIf="t.realizado && t.comentario.length === 0"
+      >
+        Calificar atención
+      </button>
+    </div>
+  </div>
+</div>

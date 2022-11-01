@@ -25,6 +25,9 @@ import { HabilitarUsuariosComponent } from './components/admin/habilitar-usuario
 import { CrearPacienteComponent } from './components/admin/crear-paciente/crear-paciente.component';
 import { CrearEspecialistaComponent } from './components/admin/crear-especialista/crear-especialista.component';
 import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.component';
+import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
+import { MisTurnosComponent } from './components/turnos/mis-turnos/mis-turnos.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,10 @@ import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.
     HabilitarUsuariosComponent,
     CrearPacienteComponent,
     CrearEspecialistaComponent,
-    CrearAdminComponent
+    CrearAdminComponent,
+    SolicitarTurnoComponent,
+    MisTurnosComponent,
+    MiPerfilComponent
   ],
   imports: [
     BrowserModule,

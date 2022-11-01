@@ -1,0 +1,65 @@
+<div *ngIf="usr !== null">
+  <div class="container text-center mt-1" style="max-width: 500px">
+    <div *ngIf="usr.perfil === 'Paciente'; else elseBlock">
+      <img
+        width="100%"
+        height="325px"
+        style="object-fit: cover"
+        src="{{ usr.imgSecundaria }}"
+      />
+    </div>
+    <ng-template #elseBlock>
+      <div style="height: 300px" class="mb-5">
+        <img
+          src="../../assets/LOGO.png"
+          width="100%"
+          height="325px
+        "
+          style="object-fit: cover"
+        />
+      </div>
+    </ng-template>
+    <img
+      style="
+        position: absolute;
+        left: 50%;
+        top: 350px;
+        transform: translate(-50%, -150px);
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+
+        border-radius: 50%;
+        background-color: #fff;
+        border: 5px #000 solid;
+      "
+      src="{{ usr.imgPerfil }}"
+    />
+    <h1 class="mt-1">
+      {{ usr.nombre + " " + usr.apellido }}
+    </h1>
+    <h5>{{ usr.mail }}</h5>
+    <h5>{{ usr.perfil }}</h5>
+    <h6>{{ usr.edad + " años" }}</h6>
+    <h6>{{ "DNI: " + usr.dni }}</h6>
+  </div>
+  <!--Mis horarios-->
+  <div *ngIf="usr.perfil === 'Especialista'">
+    <h1>Mis horarios</h1>
+    <div *ngFor="let e of usr.especialidad">
+      <div *ngFor="let h of e.horarios">
+        <p>{{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}</p>
+      </div>
+    </div>
+    <div *ngFor="let e of usr.especialidad; let i = index">
+      <button (click)="seleccionarEspecialidad(e, i)">
+        Seleccionar especialidad
+      </button>
+    </div>
+    <input type="number" [(ngModel)]="dia" />
+    <input type="number" [(ngModel)]="mes" />
+    <input type="number" [(ngModel)]="hora" />
+    <input type="number" [(ngModel)]="minuto" />
+    <button (click)="agregarHorario()">Agregar horario</button>
+  </div>
+</div>

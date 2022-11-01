@@ -1,2 +1,27 @@
-<p>home-pacientes works!</p>
-<button class="btn btn-success" (click)="Salir()">SALIR</button>
+<nav class="navigacion bg-light">
+  <header class="d-flex flex-wrap justify-content-center py-3">
+    <p
+      class="ms-3 me-2 d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none"
+    >
+      <span class="fs-4 center">Friadenrich Medicina y Salud - Paciente</span>
+    </p>
+
+    <ul class="nav nav-pills">
+      <li class="nav-item">
+        <a routerLink="mi-perfil" class="nav-link">Mi perfíl</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="mis-turnos" class="nav-link">Mis turnos</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="solicitar-turno" class="nav-link">Solicitar turno</a>
+      </li>
+      <li class="nav-item me-3">
+        <button (click)="Salir()" class="btn btn-danger" aria-current="page">
+          Salir
+        </button>
+      </li>
+    </ul>
+  </header>
+</nav>
+<router-outlet></router-outlet>

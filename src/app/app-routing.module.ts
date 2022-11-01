@@ -12,32 +12,75 @@ import { HomeAdminsComponent } from './pages/homes/home-admins/home-admins.compo
 import { CrearEspecialistaComponent } from './components/admin/crear-especialista/crear-especialista.component';
 import { CrearPacienteComponent } from './components/admin/crear-paciente/crear-paciente.component';
 import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.component';
+import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
+import { MisTurnosComponent } from './components/turnos/mis-turnos/mis-turnos.component';
+import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 
 const routes: Routes = [
-  { path: "registro/paciente", component: RegistroPacientesComponent },
-  { path: "registro/especialista", component: RegistroEspecialistasComponent },
-  
-  { path: "ingreso", component: LoginPacientesComponent },
-  
-  { path: "home/esperando-validacion", component: EsperandoValidacionComponent },
-  
-  { path: "home/pacientes", component: HomePacientesComponent },
-  { path: "home/especialistas", component: HomeEspecialistasComponent },
-  { path: "home/administradores", component: HomeAdminsComponent,
-    children: [
-      {path: "", redirectTo: "habilitar-especialistas", pathMatch: "full"},
-      { path: "habilitar-especialistas", component: HabilitarUsuariosComponent },
-      { path: "generar-especialista", component: CrearEspecialistaComponent },
-      { path: "generar-paciente", component: CrearPacienteComponent },
-      { path: "generar-admin", component: CrearAdminComponent }
-    ]
+  { path: 'registro/paciente', component: RegistroPacientesComponent },
+  { path: 'registro/especialista', component: RegistroEspecialistasComponent },
+
+  { path: 'ingreso', component: LoginPacientesComponent },
+
+  {
+    path: 'home/esperando-validacion',
+    component: EsperandoValidacionComponent,
   },
 
-  { path: "**", component: HomePageComponent }
+  {
+    path: 'home/pacientes',
+    component: HomePacientesComponent,
+    children: [
+      { path: '', redirectTo: 'mi-perfil', pathMatch: 'full' },
+      {
+        path: 'mi-perfil',
+        component: MiPerfilComponent,
+      },
+      {
+        path: 'mis-turnos',
+        component: MisTurnosComponent,
+      },
+      {
+        path: 'solicitar-turno',
+        component: SolicitarTurnoComponent,
+      },
+    ],
+  },
+  {
+    path: 'home/especialistas',
+    component: HomeEspecialistasComponent,
+    children: [
+      { path: '', redirectTo: 'mi-perfil', pathMatch: 'full' },
+      {
+        path: 'mi-perfil',
+        component: MiPerfilComponent,
+      },
+    ],
+  },
+  {
+    path: 'home/administradores',
+    component: HomeAdminsComponent,
+    children: [
+      { path: '', redirectTo: 'mi-perfil', pathMatch: 'full' },
+      {
+        path: 'mi-perfil',
+        component: MiPerfilComponent,
+      },
+      {
+        path: 'habilitar-especialistas',
+        component: HabilitarUsuariosComponent,
+      },
+      { path: 'generar-especialista', component: CrearEspecialistaComponent },
+      { path: 'generar-paciente', component: CrearPacienteComponent },
+      { path: 'generar-admin', component: CrearAdminComponent },
+    ],
+  },
+
+  { path: '**', component: HomePageComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

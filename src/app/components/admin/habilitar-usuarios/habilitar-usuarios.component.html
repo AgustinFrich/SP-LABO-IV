@@ -1,13 +1,13 @@
-<div class="adaptar container" style="max-width: 502px;">
-    <h1 class="mb-5 text-center" >Aprobar Especialistas</h1>
-    <div *ngFor="let e of especialistas" class="card p-3 mb-2">
-        <p>{{ e.nombre + " " + e.apellido }}</p>
-        <p>{{ e.mail }}</p>
-        <ul>
-            <li *ngFor="let es of e.especialidad">
-                {{es}}
-            </li>
-        </ul>
-        <button class="btn btn-success" (click)="Aprobar(e.mail)">Aprobar</button>
-    </div>
+<div class="container" style="max-width: 502px">
+  <h1 class="mb-5 text-center">Aprobar Especialistas</h1>
+  <div *ngFor="let e of especialistas" class="card p-3 mb-2">
+    <p>{{ e.nombre + " " + e.apellido }}</p>
+    <p>{{ e.mail }}</p>
+    <ul>
+      <li *ngFor="let es of e.especialidad">
+        {{ es }}
+      </li>
+    </ul>
+    <button class="btn btn-success" (click)="Aprobar(e.mail)">Aprobar</button>
+  </div>
 </div>

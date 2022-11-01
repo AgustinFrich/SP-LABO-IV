@@ -1,0 +1,6 @@
+* Sacar un turno
+ - Comienza mostrando las ESPECIALIDADES en botones con la imagen de la especialidad, en caso de no tener muesra imagen por default. Deben ser botones rectangulares sin el nombre de la especialidad
+
+- Una vez seleccionada mostrará los PROFESIONALES, en botones con la imagen de perfil de cada profesional y su nombre arriba de la foto. Estos botones deben ser rectangulares.
+
+- Una vez seleccionado el profesional, aparecerán los días y horarios con turnos disponibles para ese PROFESIONAL. Estos botones deben ser rectangulares. Formato (20/09 13:15)
