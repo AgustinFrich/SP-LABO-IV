@@ -151,9 +151,11 @@
         </small>
       </div>
     </div>
-    <div *ngIf="tokenVisible">
-      reCAPTCHA Token <br />
-      <p style="color: red">{{ reCAPTCHAToken }}</p>
+    <div class="d-flex justify-content-center">
+      <ngx-recaptcha2
+        siteKey="{{ siteKey }}"
+        formControlName="recaptcha"
+      ></ngx-recaptcha2>
     </div>
     <div class="d-flex justify-content-end">
       <button class="btn btn-primary mt-5 mb-5" [disabled]="!forma.valid">

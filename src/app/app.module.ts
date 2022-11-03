@@ -13,13 +13,10 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ElegirEspecialidadComponent } from './components/utils/elegir-especialidad/elegir-especialidad.component';
 import { FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { HomeEspecialistasComponent } from './pages/homes/home-especialistas/home-especialistas.component';
 import { HomePacientesComponent } from './pages/homes/home-pacientes/home-pacientes.component';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-import { LoadingComponent } from './components/utils/loading/loading.component';
-import { VolverInicioComponent } from './components/utils/volver-inicio/volver-inicio.component';
 import { HomeAdminsComponent } from './pages/homes/home-admins/home-admins.component';
 import { HabilitarUsuariosComponent } from './components/admin/habilitar-usuarios/habilitar-usuarios.component';
 import { CrearPacienteComponent } from './components/admin/crear-paciente/crear-paciente.component';
@@ -29,8 +26,14 @@ import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/sol
 import { MisTurnosComponent } from './components/turnos/mis-turnos/mis-turnos.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { HttpClientModule } from '@angular/common/http';
-import { RecaptchaV3Module, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
-import { RecapthcaService } from './services/recapthca.service';
+
+import {
+  RECAPTCHA_SETTINGS,
+  RecaptchaFormsModule,
+  RecaptchaModule,
+  RecaptchaSettings,
+} from 'ng-recaptcha';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +51,9 @@ import { RecapthcaService } from './services/recapthca.service';
   ],
   imports: [
     BrowserModule,
-    RecaptchaV3Module,
+    RecaptchaModule,
+    RecaptchaFormsModule,
+    RecaptchaModule,
     AppRoutingModule,
     ReactiveFormsModule,
     CommonModule,
@@ -66,8 +71,10 @@ import { RecapthcaService } from './services/recapthca.service';
   providers: [
     { provide: FIREBASE_OPTIONS, useValue: environment.firebase },
     {
-      provide: RECAPTCHA_V3_SITE_KEY,
-      useValue: environment.recaptcha.siteKey,
+      provide: RECAPTCHA_SETTINGS,
+      useValue: {
+        siteKey: environment.recaptcha.siteKey,
+      } as RecaptchaSettings,
     },
   ],
   bootstrap: [AppComponent],

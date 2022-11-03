@@ -11,10 +11,11 @@ export const environment = {
     apiKey: 'AIzaSyBA35AHDHnZUGuw1pb-WK3QoKjZi3Lo3HE',
     authDomain: 'sp-labo4-friadenrich.firebaseapp.com',
     messagingSenderId: '562979416703',
-  },recaptcha: {
-        siteKey: '6LcGKs4iAAAAANz3U-MfeCvShOP6jmHyVD08z3eX',
-    },
-  production: false
+  },
+  recaptcha: {
+    siteKey: '6LeGetUiAAAAAPqmun_XvXVRRi0QTOiBoHq8Yoec',
+  },
+  production: false,
 };
 
 /*

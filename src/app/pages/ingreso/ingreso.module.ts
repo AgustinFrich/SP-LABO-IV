@@ -10,16 +10,22 @@ import { LoginPacientesComponent } from './login-pacientes/login-pacientes.compo
 import { RegistroEspecialistasComponent } from './registro-especialistas/registro-especialistas.component';
 import { RegistroPacientesComponent } from './registro-pacientes/registro-pacientes.component';
 import { RegistroTotalComponent } from './registro-total/registro-total.component';
-
+import { RecaptchaModule } from 'ng-recaptcha';
+import { NgxCaptchaModule } from 'ngx-captcha';
 @NgModule({
   declarations: [
     LoginPacientesComponent,
     RegistroEspecialistasComponent,
     RegistroPacientesComponent,
-    RegistroTotalComponent
+    RegistroTotalComponent,
   ],
   imports: [
-    CommonModule, FormsModule, ReactiveFormsModule, UtilsModule
-  ], providers: []
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    UtilsModule,
+    NgxCaptchaModule,
+  ],
+  providers: [],
 })
-export class IngresoModule { }
+export class IngresoModule {}

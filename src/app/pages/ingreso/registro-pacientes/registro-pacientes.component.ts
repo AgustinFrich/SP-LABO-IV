@@ -9,7 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Paciente } from 'src/app/classes/paciente';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registro-pacientes',
@@ -20,14 +20,8 @@ export class RegistroPacientesComponent implements OnInit {
   public forma!: FormGroup;
   imagenPerfil?: File;
   imagenSecundaria?: File;
-  reCAPTCHAToken: string = '';
-  tokenVisible: boolean = false;
-
-  constructor(
-    public fb: FormBuilder,
-    private auth: AuthService,
-    private recaptchaV3Service: ReCaptchaV3Service
-  ) {}
+  siteKey = environment.recaptcha.siteKey;
+  constructor(public fb: FormBuilder, private auth: AuthService) {}
 
   ngOnInit(): void {
     this.forma = this.fb.group({
@@ -51,6 +45,7 @@ export class RegistroPacientesComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       'img-perfil': ['', [Validators.required]],
       'img-secundaria': ['', [Validators.required]],
+      recaptcha: ['', [Validators.required]],
     });
   }
 

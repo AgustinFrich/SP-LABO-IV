@@ -3,6 +3,7 @@ import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Especialidad } from 'src/app/classes/especialidad';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-registro-especialistas',
@@ -12,10 +13,13 @@ import { Especialidad } from 'src/app/classes/especialidad';
 export class RegistroEspecialistasComponent implements OnInit {
   especialidades: Especialidad[] = [];
   imagen?: File;
-
+  token: string | undefined;
   public forma!: FormGroup;
-
-  constructor(public fb: FormBuilder, private auth: AuthService) {}
+  siteKey = '';
+  constructor(public fb: FormBuilder, private auth: AuthService) {
+    this.token = undefined;
+    this.siteKey = environment.recaptcha.siteKey;
+  }
 
   ngOnInit(): void {
     this.forma = this.fb.group({
@@ -37,6 +41,7 @@ export class RegistroEspecialistasComponent implements OnInit {
       mail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
       'img-perfil': ['', [Validators.required]],
+      recaptcha: ['', [Validators.required]],
     });
   }
 
