@@ -13,15 +13,26 @@
       {{ "Especialidad: " + e.nombre }}
     </button>
   </div>
-  <div *ngFor="let p of pacientes">
-    <button class="btn btn-succes" (click)="filtrarPorPaciente(p)">
-      {{ "Paciente: " + p.nombre + p.apellido }}
-    </button>
+  <div *ngIf="auth.usuario!.perfil === 'Especialista'">
+    <h6>Filtrar por paciente</h6>
+    <div *ngFor="let p of pacientes">
+      <button class="btn btn-succes" (click)="filtrarPorPaciente(p)">
+        {{ "Paciente: " + p.nombre + p.apellido }}
+      </button>
+    </div>
   </div>
 </div>
 
 <div class="container" style="max-width: 500px">
-  <h1 style="text-align: center">Mis turnos</h1>
+  <div *ngIf="auth.usuario">
+    <div *ngIf="auth.usuario.perfil !== 'Admin'">
+      <h1 style="text-align: center">Mis turnos</h1>
+    </div>
+    <div *ngIf="auth.usuario.perfil === 'Admin'">
+      <h1 style="text-align: center">Todos los turnos</h1>
+    </div>
+  </div>
+
   <div *ngIf="auth.usuario">
     <div *ngIf="auth.usuario.perfil === 'Paciente'">
       <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
@@ -56,7 +67,14 @@
         <button
           class="btn btn-info m-1"
           *ngIf="!t.cancelado && t.comentarioEspecialista.length > 0"
-          (click)="verDiagnostico(t.comentarioEspecialista, t.diagnostico)"
+          (click)="
+            verDiagnostico(
+              t.comentarioEspecialista,
+              t.diagnostico,
+              t.clave,
+              t.valor
+            )
+          "
         >
           Ver reseña
         </button>
@@ -80,6 +98,17 @@
       <div *ngFor="let t of turnosFiltrados" class="card text-center mb-5">
         <p>{{ t.paciente.nombre + " " + t.paciente.apellido }}</p>
         <p>{{ t.paciente.obraSocial }}</p>
+        <p>
+          {{
+            t.horario.dia +
+              "/" +
+              t.horario.mes +
+              " - " +
+              t.horario.hora +
+              ":" +
+              t.horario.minuto
+          }}
+        </p>
         <h2>Estado: {{ t.estado }}</h2>
         <button
           class="btn btn-danger m-1"
@@ -106,14 +135,6 @@
         </button>
 
         <button
-          class="btn btn-success m-1"
-          *ngIf="t.aceptado && !t.cancelado && !t.realizado"
-          (click)="finalizarTurno(t)"
-        >
-          Finalizar
-        </button>
-
-        <button
           class="btn btn-info m-1"
           *ngIf="(t.cancelado || t.rechazado) && t.comentario.length > 0"
           (click)="verResenia(t.comentario)"
@@ -123,10 +144,27 @@
         <button
           class="btn btn-info m-1"
           *ngIf="!t.cancelado && t.comentarioEspecialista.length > 0"
-          (click)="verDiagnostico(t.comentarioEspecialista, t.diagnostico)"
+          (click)="
+            verDiagnostico(
+              t.comentarioEspecialista,
+              t.diagnostico,
+              t.clave,
+              t.valor
+            )
+          "
         >
           Ver reseña
         </button>
+        <button
+          *ngIf="t.aceptado && !t.cancelado && !t.realizado"
+          (click)="t.finalizar = !t.finalizar"
+          class="btn btn-success"
+        >
+          Mostrar formulario de finalización
+        </button>
+        <div *ngIf="t.aceptado && !t.cancelado && !t.realizado && t.finalizar">
+          <app-agregar-historia [turno]="t"></app-agregar-historia>
+        </div>
       </div>
     </div>
 

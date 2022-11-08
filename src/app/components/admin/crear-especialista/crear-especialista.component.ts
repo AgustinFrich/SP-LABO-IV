@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Especialidad } from 'src/app/classes/especialidad';
 import { Especialista } from 'src/app/classes/especialista';
 import { AuthService } from 'src/app/services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-especialista',
@@ -55,7 +56,10 @@ export class CrearEspecialistaComponent implements OnInit {
       this.forma.value.password,
       ''
     );
+    // DEVOVLER ALGO
     this.auth.registroDesdeAdminEspecialista(especialista, this.imagen);
+    this.forma.reset();
+    Swal.fire('Correcto!', 'Registrado!');
   }
 
   onFileSelected($event: any) {

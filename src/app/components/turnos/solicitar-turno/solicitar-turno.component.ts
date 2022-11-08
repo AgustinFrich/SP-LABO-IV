@@ -40,11 +40,14 @@ export class SolicitarTurnoComponent implements OnInit {
 
   elegirEspecialidad(especialidad: Especialidad) {
     this.especialidad = especialidad;
+    this.especialista = null;
+    this.horarios = null;
+    this.horario = null;
     this.especialistasFiltrados = this.especialistas.filter(
       (e: Especialista) => {
         const r = e.especialidad.find((esp) => {
           console.log(e, esp, especialidad);
-          return esp.nombre === especialidad.nombre;
+          return esp.nombre === especialidad.nombre && e.aprobado;
         });
         if (r !== undefined) {
           return e.especialidad.indexOf(r) >= 0;
@@ -54,10 +57,13 @@ export class SolicitarTurnoComponent implements OnInit {
       }
     );
   }
+
   elegirEspecialista(especialista: Especialista) {
     this.especialista = especialista;
+    this.horario = null;
+
     const h = especialista.especialidad.find((esp) => {
-      return (esp.nombre = this.especialidad!.nombre);
+      return esp.nombre === this.especialidad!.nombre;
     })?.horarios;
 
     if (h !== undefined) {

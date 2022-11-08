@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
     // this.loading.loading = true;
     // setTimeout(() => {
     this.auth.Cambio();
-
     // }, 3000)
   }
 }

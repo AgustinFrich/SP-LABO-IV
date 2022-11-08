@@ -33,6 +33,11 @@ import {
   RecaptchaModule,
   RecaptchaSettings,
 } from 'ng-recaptcha';
+import { SeccionUsuariosComponent } from './components/seccion-usuarios/seccion-usuarios.component';
+import { AgregarHistoriaComponent } from './components/historias/agregar-historia/agregar-historia.component';
+import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-usuarios.component';
+import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
+import { MiHistoriaComponent } from './components/historias/mi-historia/mi-historia.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +53,11 @@ import {
     SolicitarTurnoComponent,
     MisTurnosComponent,
     MiPerfilComponent,
+    SeccionUsuariosComponent,
+    AgregarHistoriaComponent,
+    TodosUsuariosComponent,
+    VerHistoriasComponent,
+    MiHistoriaComponent,
   ],
   imports: [
     BrowserModule,

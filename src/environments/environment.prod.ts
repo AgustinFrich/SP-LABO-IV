@@ -8,5 +8,8 @@ export const environment = {
     authDomain: 'sp-labo4-friadenrich.firebaseapp.com',
     messagingSenderId: '562979416703',
   },
-  production: true
+  recaptcha: {
+    siteKey: '6LeGetUiAAAAAPqmun_XvXVRRi0QTOiBoHq8Yoec',
+  },
+  production: true,
 };

@@ -24,7 +24,7 @@ export class ElegirEspecialidadComponent implements OnInit {
     this.utilsService.getEspecialidades().subscribe((docs) => {
       this.especialidades = [];
       docs.forEach((doc) => {
-        this.especialidades.push({ ...doc, checked: false });
+        this.especialidades.push({ ...doc, checked: false, horarios: [] });
       });
     });
   }

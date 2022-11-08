@@ -15,6 +15,9 @@ import { CrearAdminComponent } from './components/admin/crear-admin/crear-admin.
 import { SolicitarTurnoComponent } from './components/turnos/solicitar-turno/solicitar-turno.component';
 import { MisTurnosComponent } from './components/turnos/mis-turnos/mis-turnos.component';
 import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
+import { SeccionUsuariosComponent } from './components/seccion-usuarios/seccion-usuarios.component';
+import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-usuarios.component';
+import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
 
 const routes: Routes = [
   { path: 'registro/paciente', component: RegistroPacientesComponent },
@@ -56,6 +59,10 @@ const routes: Routes = [
         component: MiPerfilComponent,
       },
       {
+        path: 'pacientes',
+        component: VerHistoriasComponent,
+      },
+      {
         path: 'mis-turnos',
         component: MisTurnosComponent,
       },
@@ -71,12 +78,30 @@ const routes: Routes = [
         component: MiPerfilComponent,
       },
       {
-        path: 'habilitar-especialistas',
-        component: HabilitarUsuariosComponent,
+        path: 'usuarios',
+        component: SeccionUsuariosComponent,
+        children: [
+          { path: '', redirectTo: 'ver-usuarios', pathMatch: 'full' },
+          {
+            path: 'ver-usuarios',
+            component: TodosUsuariosComponent,
+          },
+          {
+            path: 'ver-historias',
+            component: VerHistoriasComponent,
+          },
+          {
+            path: 'generar-especialista',
+            component: CrearEspecialistaComponent,
+          },
+          {
+            path: 'habilitar-especialistas',
+            component: HabilitarUsuariosComponent,
+          },
+          { path: 'generar-paciente', component: CrearPacienteComponent },
+          { path: 'generar-admin', component: CrearAdminComponent },
+        ],
       },
-      { path: 'generar-especialista', component: CrearEspecialistaComponent },
-      { path: 'generar-paciente', component: CrearPacienteComponent },
-      { path: 'generar-admin', component: CrearAdminComponent },
       { path: 'turnos', component: MisTurnosComponent },
     ],
   },

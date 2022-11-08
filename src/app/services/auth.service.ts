@@ -32,6 +32,12 @@ import { Usuario } from '../classes/usuario';
 import { Admin } from '../classes/admin';
 import { LoadingService } from './loading.service';
 import Swal from 'sweetalert2';
+import {
+  ref,
+  uploadBytes,
+  Storage,
+  getDownloadURL,
+} from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -46,7 +52,8 @@ export class AuthService {
     private storage: AngularFireStorage,
     private auth: AngularFireAuth,
     private router: Router,
-    private loading: LoadingService
+    private loading: LoadingService,
+    private storage2: Storage
   ) {}
 
   PostEspecialista(especialista: Especialista, imagen: File | undefined) {
@@ -280,45 +287,29 @@ export class AuthService {
     if (imagenPerfil !== undefined) {
       const filePath1 =
         'perfiles/paciente/' + paciente.nombre + '-pri-' + Date.now();
-      const storageRef1 = this.storage.ref(filePath1);
-      const subir1 = storageRef1.put(paciente.imgPerfil, {
-        contentType: 'image/png',
-      });
-      subir1
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            storageRef1.getDownloadURL().subscribe((res) => {
-              paciente.imgPerfil = res;
-            });
-          })
-        )
-        .subscribe();
+      const storageRef0 = ref(this.storage2, filePath1);
+      await uploadBytes(storageRef0, imagenPerfil);
+      const url = await getDownloadURL(storageRef0);
+      paciente.imgPerfil = url;
     }
+
     if (imagenSecundaria !== undefined) {
       const filePath2 =
         'perfiles/paciente/' + paciente.nombre + '-sec-' + Date.now();
-      const storageRef2 = this.storage.ref(filePath2);
-      const subir2 = storageRef2.put(imagenSecundaria, {
-        contentType: 'image/png',
-      });
-      subir2
-        .snapshotChanges()
-        .pipe(
-          finalize(() => {
-            storageRef2.getDownloadURL().subscribe((res) => {
-              paciente.imgSecundaria = res;
-            });
-          })
-        )
-        .subscribe();
+      const storageRef1 = ref(this.storage2, filePath2);
+      await uploadBytes(storageRef1, imagenSecundaria);
+      const url = await getDownloadURL(storageRef1);
+      paciente.imgSecundaria = url;
     }
 
     const col = collection(this.fs, 'Pacientes');
     const col2 = collection(this.fs, 'Usuarios');
     this.usuario = paciente;
+    const col3 = collection(this.fs, 'AccesosRapdidos');
+
     addDoc(col, { ...paciente });
     addDoc(col2, { ...paciente });
+    addDoc(col3, { ...paciente });
   }
 
   CREARESPECIALISTA(especialista: Especialista, imagen: File | undefined) {
@@ -338,18 +329,22 @@ export class AuthService {
               especialista.imgPerfil = res;
               const col = collection(this.fs, 'Especialistas');
               const col2 = collection(this.fs, 'Usuarios');
+              const col3 = collection(this.fs, 'AccesosRapdidos');
               this.usuario = especialista;
               addDoc(col, { ...especialista });
               addDoc(col2, { ...especialista });
+              addDoc(col3, { ...especialista });
             });
           })
         )
         .subscribe();
     } else {
       const col = collection(this.fs, 'Especialistas');
+      const col3 = collection(this.fs, 'AccesosRapdidos');
       const col2 = collection(this.fs, 'Usuarios');
       addDoc(col, { ...especialista });
       addDoc(col2, { ...especialista });
+      addDoc(col3, { ...especialista });
     }
   }
 

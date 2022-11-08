@@ -11,9 +11,12 @@ import {
 import { getDownloadURL, Storage, uploadBytes } from '@angular/fire/storage';
 import { addDoc, collection } from '@firebase/firestore';
 import { ref, uploadString } from 'firebase/storage';
+import { Admin } from '../classes/admin';
 import { Especialidad } from '../classes/especialidad';
 import { Especialista } from '../classes/especialista';
+import { Paciente } from '../classes/paciente';
 import { Usuario } from '../classes/usuario';
+import { AuthService } from './auth.service';
 import { LoadingService } from './loading.service';
 
 @Injectable({
@@ -23,7 +26,8 @@ export class UtilsService {
   constructor(
     private fs: Firestore,
     private l: LoadingService,
-    private storage: Storage
+    private storage: Storage,
+    private auth: AuthService
   ) {}
 
   async aniadirEspecialidad(especialidad: Especialidad, imagen: File) {
@@ -44,6 +48,10 @@ export class UtilsService {
   }
   getPacientes() {
     const col = collection(this.fs, 'Pacientes');
+    return collectionData(col);
+  }
+  getUsuarios() {
+    const col = collection(this.fs, 'Usuarios');
     return collectionData(col);
   }
 
@@ -87,5 +95,23 @@ export class UtilsService {
   getEspecialistas() {
     const col = collection(this.fs, 'Especialistas');
     return collectionData(col);
+  }
+
+  async getUsuario(mail: string): Promise<Usuario> {
+    let usuario: Usuario;
+    const q = query(collection(this.fs, 'Usuarios'), where('mail', '==', mail));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      if (doc.data()['perfil'] === 'Especialista') {
+        usuario = doc.data() as Especialista;
+      } else if (doc.data()['perfil'] === 'Paciente') {
+        usuario = doc.data() as Paciente;
+      } else if (doc.data()['perfil'] === 'Admin') {
+        usuario = doc.data() as Admin;
+      } else {
+        usuario = this.auth.usuario!;
+      }
+    });
+    return usuario!;
   }
 }

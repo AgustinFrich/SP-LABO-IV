@@ -5,9 +5,12 @@
     <p>{{ e.mail }}</p>
     <ul>
       <li *ngFor="let es of e.especialidad">
-        {{ es }}
+        {{ es.nombre }}
       </li>
     </ul>
     <button class="btn btn-success" (click)="Aprobar(e.mail)">Aprobar</button>
+  </div>
+  <div *ngIf="especialistas.length === 0" class="text-center">
+    <p>Nadie a quién aprobar...</p>
   </div>
 </div>

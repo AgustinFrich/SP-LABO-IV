@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div [hidden]="horarios === null">
+    <div [hidden]="horarios === null && especialista === null">
       <h3 class="mt-2">Paso 3. Elija el horario</h3>
       <div *ngIf="horarios! !== null">
         <div *ngFor="let h of horarios">
@@ -35,15 +35,19 @@
             style="vertical-align: middle; cursor: pointer"
             (click)="elegirHorario(h)"
           >
-            <p>{{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}</p>
+            <p class="m-1">
+              {{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}
+            </p>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div [hidden]="horario === null">
-    <button class="btn btn-success" (click)="aceptarTurno()">
-      Pedir Turno
-    </button>
+    <div class="mt-4 d-flex justify-content-end">
+      <button class="btn btn-success" (click)="aceptarTurno()">
+        Pedir Turno
+      </button>
+    </div>
   </div>
 </div>

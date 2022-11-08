@@ -17,6 +17,10 @@ export class Turno {
   diagnostico: string;
   estado: string;
   id: string;
+  idHistoria: string;
+  finalizar = false;
+  clave: string;
+  valor: string;
   constructor(
     especialista: Especialista,
     especialidad: Especialidad,
@@ -36,5 +40,8 @@ export class Turno {
     this.id = '';
     this.diagnostico = '';
     this.comentarioEspecialista = '';
+    this.idHistoria = '';
+    this.clave = '';
+    this.valor = '';
   }
 }

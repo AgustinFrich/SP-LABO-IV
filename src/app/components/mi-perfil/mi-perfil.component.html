@@ -42,24 +42,55 @@
     <h5>{{ usr.perfil }}</h5>
     <h6>{{ usr.edad + " años" }}</h6>
     <h6>{{ "DNI: " + usr.dni }}</h6>
-  </div>
-  <!--Mis horarios-->
-  <div *ngIf="usr.perfil === 'Especialista'">
-    <h1>Mis horarios</h1>
-    <div *ngFor="let e of usr.especialidad">
-      <div *ngFor="let h of e.horarios">
-        <p>{{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}</p>
+    <!--Mis horarios-->
+    <div *ngIf="usr.perfil === 'Especialista'">
+      <br />
+      <hr />
+      <h1>Mis horarios</h1>
+      <div *ngFor="let e of usr.especialidad; let i = index">
+        <h4>{{ "Horarios como " + e.nombre }}</h4>
+        <div *ngFor="let h of e.horarios">
+          <p>{{ h.dia + "/" + h.mes + " " + h.hora + ":" + h.minuto }}</p>
+        </div>
+        <button class="btn btn-light" (click)="seleccionarEspecialidad(e, i)">
+          Agregar horario
+        </button>
+        <br />
+        <br />
       </div>
+
+      <div *ngIf="esp !== undefined">
+        <br />
+        <hr />
+        <h3>Agregar horario para {{ esp.nombre }}</h3>
+        <input
+          [(ngModel)]="dia"
+          style="width: 30px"
+          class="in-fecha in-fecha-der"
+        /><span>/</span>
+        <input [(ngModel)]="mes" style="width: 30px" class="in-fecha" /><span>
+          -
+        </span>
+        <input
+          [(ngModel)]="hora"
+          style="width: 30px"
+          class="in-fecha in-fecha-der"
+        /><span>:</span>
+        <input [(ngModel)]="minuto" style="width: 30px" class="in-fecha" />
+        <button class="btn btn-success" (click)="agregarHorario()">
+          Agregar horario
+        </button>
+      </div>
+      <div style="height: 400px"></div>
+
+      <!-- Historia clinica -->
     </div>
-    <div *ngFor="let e of usr.especialidad; let i = index">
-      <button (click)="seleccionarEspecialidad(e, i)">
-        Seleccionar especialidad
-      </button>
+    <div *ngIf="usr.perfil === 'Paciente'">
+      <br />
+      <hr />
+      <h1>Mi historia</h1>
+      <app-mi-historia [historia]="historia"></app-mi-historia>
+      <div style="height: 200px"></div>
     </div>
-    <input type="number" [(ngModel)]="dia" />
-    <input type="number" [(ngModel)]="mes" />
-    <input type="number" [(ngModel)]="hora" />
-    <input type="number" [(ngModel)]="minuto" />
-    <button (click)="agregarHorario()">Agregar horario</button>
   </div>
 </div>

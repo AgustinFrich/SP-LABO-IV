@@ -10,15 +10,21 @@
       <label class="ms-2" for="{{ i }}">{{ e.nombre }}</label>
     </div>
     <div *ngIf="permitirAniadir" class="d-flex mt-3">
-      <input [(ngModel)]="nuevo" class="form-control w-75" />
-      <input
-        (change)="cambiarImagen($event)"
-        type="file"
-        class="form-control w-75"
-      />
-      <button (click)="Aniadir()" class="btn btn-light w-25">
-        Añadir esp.
-      </button>
+      <div class="row">
+        <div class="col-9">
+          <input [(ngModel)]="nuevo" class="form-control" />
+          <input
+            (change)="cambiarImagen($event)"
+            type="file"
+            class="form-control"
+          />
+        </div>
+        <div class="col-3">
+          <button (click)="Aniadir()" class="btn btn-light h-100">
+            Añadir especialidad
+          </button>
+        </div>
+      </div>
     </div>
   </form>
 </div>

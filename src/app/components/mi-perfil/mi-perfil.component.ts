@@ -6,6 +6,9 @@ import { Subscription } from 'rxjs';
 import { Especialidad } from 'src/app/classes/especialidad';
 import { Horario } from 'src/app/classes/horario';
 import { TurnosService } from 'src/app/services/turnos.service';
+import { HistoriaClinica } from 'src/app/classes/historia-clinica';
+import { HistoriasClinicasService } from 'src/app/services/historias-clinicas.service';
+import { Paciente } from 'src/app/classes/paciente';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -16,7 +19,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   constructor(
     public auth: AuthService,
     private _route: ActivatedRoute,
-    private turnosService: TurnosService
+    private turnosService: TurnosService,
+    private hs: HistoriasClinicasService
   ) {}
   usr: Usuario | any;
   //  private _routerSubscription: any;
@@ -27,16 +31,26 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   mes: number = 0;
   hora: number = 0;
   minuto: number = 0;
-
+  historia?: HistoriaClinica;
   ngOnInit(): void {
     //this._routerSubscription = this._route.url.subscribe((url) => {
     // Your action/function will go here
     //console.log(this._route.url);
+    if (this.auth.usuario !== null) {
+      this.hs.traerHistoria(this.auth.usuario as Paciente).then((h) => {
+        this.historia = h;
+        console.log(h);
+      });
+    }
     this.usr = this.auth.usuario;
     this.unsub = this.auth.usuarioCambio$.subscribe((usr) => {
       if (usr !== null) {
         console.log(usr);
         this.usr = usr;
+        this.hs.traerHistoria(usr as Paciente).then((h) => {
+          this.historia = h;
+          console.log(h);
+        });
       }
     });
     //});

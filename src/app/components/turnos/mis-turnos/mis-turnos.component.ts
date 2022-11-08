@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { TurnosService } from 'src/app/services/turnos.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import Swal from 'sweetalert2';
+import { Usuario } from 'src/app/classes/usuario';
 
 @Component({
   selector: 'app-mis-turnos',
@@ -20,7 +21,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   especialistas: Especialista[] = [];
   especialidades: Especialidad[] = [];
   pacientes: Paciente[] = [];
-
+  usuario!: Usuario;
   private unsub: Subscription = new Subscription();
   constructor(
     public auth: AuthService,
@@ -29,6 +30,10 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.utils.getUsuario(this.auth.usuario!.mail).then((usr) => {
+      console.log(usr);
+      this.usuario = usr;
+    });
     this.unsub = this.turnosService
       .getMisTurnos(this.auth.usuario!)
       .subscribe((doc) => {
@@ -56,15 +61,24 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
     Swal.fire('Comentario del turno: ', '"' + resenia + '"', 'info');
   }
 
-  verDiagnostico(resenia: string, diagnostico: string) {
+  verDiagnostico(
+    resenia: string,
+    diagnostico: string,
+    clave: string,
+    valor: string
+  ) {
     Swal.fire(
       'Información de la atención: ',
       'Diagnóstico: "' +
         diagnostico +
-        '"<br/>' +
+        '<div style="height: 10px;"></div>' +
         'Comentario: "' +
         resenia +
-        '"',
+        '"' +
+        '<div style="height: 10px;"></div>' +
+        clave +
+        ': ' +
+        valor,
       'info'
     );
   }
