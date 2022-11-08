@@ -9,7 +9,9 @@ import { TurnosService } from 'src/app/services/turnos.service';
 import { HistoriaClinica } from 'src/app/classes/historia-clinica';
 import { HistoriasClinicasService } from 'src/app/services/historias-clinicas.service';
 import { Paciente } from 'src/app/classes/paciente';
-
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { TDocumentDefinitions } from 'pdfmake/interfaces';
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
@@ -81,5 +83,34 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         this.turnosService.actualizarHorarios(this.usr, this.esp, this.i);
       }
     }
+  }
+
+  async descargarMiHistoria() {
+    //data:image/png;base64,
+    let img: string = '';
+    // function to encode file data to base64 encoded string
+
+    var request = new XMLHttpRequest();
+    request.open('GET', '../../../assets/LOGO.png', false);
+    request.responseType = 'blob';
+    request.onload = function () {
+      var reader = new FileReader();
+      console.log(request.response);
+      reader.readAsDataURL(request.response);
+      reader.onload = function (e) {
+        console.log('DataURL:', e.target!.result);
+        img = e.target!.result as string;
+        const data: TDocumentDefinitions = {
+          content: [
+            {
+              image: img,
+              width: 150,
+            },
+          ],
+        };
+        pdfMake.createPdf(data).download();
+      };
+    };
+    request.send();
   }
 }
