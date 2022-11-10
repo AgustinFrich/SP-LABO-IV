@@ -1,4 +1,6 @@
 <div class="filtros">
+  <h4>{{ filtradoPor }}</h4>
+  <br />
   <div *ngIf="auth.usuario!.perfil !== 'Especialista'">
     <h6>Filtrar por especialista</h6>
     <div *ngFor="let e of especialistas">
@@ -21,6 +23,19 @@
       </button>
     </div>
   </div>
+  <h6>Filtrar por Altura</h6>
+  <input type="number" (change)="filtrarPorAltura($event)" />
+  <h6>Filtrar por Peso</h6>
+  <input type="number" (change)="filtrarPorPeso($event)" />
+  <h6>Filtrar por Temperatura</h6>
+  <input type="number" (change)="filtrarPorTemperatura($event)" />
+  <h6>Filtrar por Presion</h6>
+  <input type="number" (change)="filtrarPorPresion($event)" />
+  <h6>Filtrar por Clave</h6>
+  <input (change)="filtrarPorClave($event)" />
+  <h6>Filtrar por Valor</h6>
+  <input (change)="filtrarPorValor($event)" />
+  <!--Fin filtros-->
 </div>
 
 <div class="container" style="max-width: 500px">

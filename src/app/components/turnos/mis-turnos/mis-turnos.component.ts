@@ -22,6 +22,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   especialidades: Especialidad[] = [];
   pacientes: Paciente[] = [];
   usuario!: Usuario;
+  filtradoPor = 'Sin filtro aplicado';
   private unsub: Subscription = new Subscription();
   constructor(
     public auth: AuthService,
@@ -134,7 +135,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
   aceptarTurno(turno: Turno) {
     this.turnosService.aceptarTurno(turno);
   }
-
+  /*
   finalizarTurno(turno: Turno) {
     Swal.fire({
       title: 'Describa el diagnóstico realizado',
@@ -180,20 +181,74 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
       }
     });
   }
-
+*/
   filtrarPorEspecialista(especialista: Especialista) {
+    this.filtradoPor =
+      'Especialista: ' + especialista.nombre + ' ' + especialista.apellido;
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.especialista.mail === especialista.mail;
     });
   }
   filtrarPorEspecialidad(especialidad: Especialidad) {
+    this.filtradoPor = 'Especialidad: ' + especialidad.nombre;
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.especialidad.nombre === especialidad.nombre;
     });
   }
   filtrarPorPaciente(paciente: Paciente) {
+    this.filtradoPor = 'Paciente: ' + paciente.nombre + ' ' + paciente.apellido;
+
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.paciente.nombre === paciente.nombre;
+    });
+  }
+
+  async filtrarPorAltura($event: any) {
+    this.filtradoPor = 'Altura: ' + $event.target.value;
+    this.turnosFiltrados = [];
+    this.turnos.forEach(async (t) => {
+      let h = await this.turnosService.getHistoria(t.idHistoria);
+      if (h.altura.toString() === $event.target.value)
+        this.turnosFiltrados.push(t);
+    });
+  }
+  async filtrarPorPeso($event: any) {
+    this.filtradoPor = 'Peso: ' + $event.target.value;
+    this.turnosFiltrados = [];
+    this.turnos.forEach(async (t) => {
+      let h = await this.turnosService.getHistoria(t.idHistoria);
+      if (h.peso.toString() === $event.target.value)
+        this.turnosFiltrados.push(t);
+    });
+  }
+  async filtrarPorTemperatura($event: any) {
+    this.filtradoPor = 'Temperatura: ' + $event.target.value;
+    this.turnosFiltrados = [];
+    this.turnos.forEach(async (t) => {
+      let h = await this.turnosService.getHistoria(t.idHistoria);
+      if (h.temperatura.toString() === $event.target.value)
+        this.turnosFiltrados.push(t);
+    });
+  }
+  async filtrarPorPresion($event: any) {
+    this.filtradoPor = 'Presion: ' + $event.target.value;
+    this.turnosFiltrados = [];
+    this.turnos.forEach(async (t) => {
+      let h = await this.turnosService.getHistoria(t.idHistoria);
+      if (h.presion.toString() === $event.target.value)
+        this.turnosFiltrados.push(t);
+    });
+  }
+  async filtrarPorClave($event: any) {
+    this.filtradoPor = 'Clave: ' + $event.target.value;
+    this.turnosFiltrados = this.turnos.filter((t) => {
+      return t.dinamicos.clave === $event.target.value;
+    });
+  }
+  async filtrarPorValor($event: any) {
+    this.filtradoPor = 'Valor: ' + $event.target.value;
+    this.turnosFiltrados = this.turnos.filter((t) => {
+      return t.dinamicos.valor === $event.target.value;
     });
   }
 }

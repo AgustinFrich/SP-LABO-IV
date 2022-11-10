@@ -20,21 +20,38 @@ import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-
 import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
 
 const routes: Routes = [
-  { path: 'registro/paciente', component: RegistroPacientesComponent },
-  { path: 'registro/especialista', component: RegistroEspecialistasComponent },
+  {
+    path: 'registro/paciente',
+    component: RegistroPacientesComponent,
+    data: { animation: 'AboutPage' },
+  },
+  {
+    path: 'registro/especialista',
+    component: RegistroEspecialistasComponent,
+    data: { animation: 'AboutPage' },
+  },
 
-  { path: 'ingreso', component: LoginPacientesComponent },
+  {
+    path: 'ingreso',
+    component: LoginPacientesComponent,
+    data: { animation: 'IngresoPage' },
+  },
 
   {
     path: 'home/esperando-validacion',
     component: EsperandoValidacionComponent,
+    data: { animation: 'AboutPage' },
   },
 
   {
     path: 'home/pacientes',
     component: HomePacientesComponent,
     children: [
-      { path: '', redirectTo: 'mi-perfil', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'mi-perfil',
+        pathMatch: 'full',
+      },
       {
         path: 'mi-perfil',
         component: MiPerfilComponent,
@@ -72,7 +89,11 @@ const routes: Routes = [
     path: 'home/administradores',
     component: HomeAdminsComponent,
     children: [
-      { path: '', redirectTo: 'mi-perfil', pathMatch: 'full' },
+      {
+        path: '',
+        redirectTo: 'mi-perfil',
+        pathMatch: 'full',
+      },
       {
         path: 'mi-perfil',
         component: MiPerfilComponent,
@@ -80,8 +101,13 @@ const routes: Routes = [
       {
         path: 'usuarios',
         component: SeccionUsuariosComponent,
+
         children: [
-          { path: '', redirectTo: 'ver-usuarios', pathMatch: 'full' },
+          {
+            path: '',
+            redirectTo: 'ver-usuarios',
+            pathMatch: 'full',
+          },
           {
             path: 'ver-usuarios',
             component: TodosUsuariosComponent,
@@ -98,15 +124,28 @@ const routes: Routes = [
             path: 'habilitar-especialistas',
             component: HabilitarUsuariosComponent,
           },
-          { path: 'generar-paciente', component: CrearPacienteComponent },
-          { path: 'generar-admin', component: CrearAdminComponent },
+          {
+            path: 'generar-paciente',
+            component: CrearPacienteComponent,
+          },
+          {
+            path: 'generar-admin',
+            component: CrearAdminComponent,
+          },
         ],
       },
-      { path: 'turnos', component: MisTurnosComponent },
+      {
+        path: 'turnos',
+        component: MisTurnosComponent,
+      },
     ],
   },
 
-  { path: '**', component: HomePageComponent },
+  {
+    path: '**',
+    component: HomePageComponent,
+    data: { animation: 'HomePage' },
+  },
 ];
 
 @NgModule({

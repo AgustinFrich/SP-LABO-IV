@@ -27,4 +27,6 @@
     </ul>
   </header>
 </nav>
-<router-outlet></router-outlet>
+<div [@homesAnimations]="getRouteAnimationData()">
+  <router-outlet></router-outlet>
+</div>

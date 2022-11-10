@@ -17,10 +17,12 @@ export class Turno {
   diagnostico: string;
   estado: string;
   id: string;
-  idHistoria: string;
+  idHistoria: any;
   finalizar = false;
   clave: string;
   valor: string;
+  dinamicos: dinamicos;
+
   constructor(
     especialista: Especialista,
     especialidad: Especialidad,
@@ -43,5 +45,10 @@ export class Turno {
     this.idHistoria = '';
     this.clave = '';
     this.valor = '';
+    this.dinamicos = { clave: '', valor: '' };
   }
+}
+interface dinamicos {
+  clave: string;
+  valor: string;
 }

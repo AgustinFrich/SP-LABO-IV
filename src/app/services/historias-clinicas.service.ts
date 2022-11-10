@@ -38,6 +38,7 @@ export class HistoriasClinicasService {
     turno.estado = 'Realizado';
     turno.comentarioEspecialista = comentario;
     turno.diagnostico = diagnostico;
+    turno.dinamicos = historia.dinamicos[historia.dinamicos.length - 1];
 
     if (ref === null) {
       addDoc(col, { ...historia }).then((ref) => {

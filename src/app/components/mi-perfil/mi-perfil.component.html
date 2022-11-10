@@ -89,10 +89,34 @@
       <br />
       <hr />
       <h1>Mi historia</h1>
-      <button class="btn btn-success" (click)="descargarMiHistoria()">
-        Descargar
-      </button>
-      <app-mi-historia [historia]="historia"></app-mi-historia>
+      <div *ngIf="historia">
+        <div class="card">
+          <div *ngIf="auth.usuario">
+            <h3 *ngIf="auth.usuario!.perfil !== 'Paciente'" class="mt-2">
+              {{
+                "Historia de " +
+                  historia.paciente.nombre +
+                  " " +
+                  historia.paciente.apellido
+              }}
+            </h3>
+          </div>
+          <h5 class="mt-2">Datos del paciente:</h5>
+          <div class="row p-0">
+            <p class="col-6">{{ historia.altura + " cm." }}</p>
+            <p class="col-6">{{ historia.peso + " kg." }}</p>
+            <p class="col-6">{{ historia.temperatura + "ºC" }}</p>
+            <p class="col-6">{{ historia.presion + " PA" }}</p>
+          </div>
+          <h5 class="mt-2">Diagnósticos guardados:</h5>
+          <div *ngFor="let d of historia.dinamicos">
+            <p>{{ d.clave + ": " + d.valor }}</p>
+          </div>
+          <button class="btn btn-success mt-2" (click)="descargarMiHistoria()">
+            Descargar
+          </button>
+        </div>
+      </div>
       <div style="height: 200px"></div>
     </div>
   </div>

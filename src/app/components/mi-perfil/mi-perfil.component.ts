@@ -12,6 +12,8 @@ import { Paciente } from 'src/app/classes/paciente';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-mi-perfil',
   templateUrl: './mi-perfil.component.html',
@@ -89,25 +91,83 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     //data:image/png;base64,
     let img: string = '';
     // function to encode file data to base64 encoded string
-
+    const historia = this.historia!;
+    const usuario = this.auth.usuario!;
     var request = new XMLHttpRequest();
-    request.open('GET', '../../../assets/LOGO.png', false);
+    request.open('GET', '../../../assets/LOGO.png', true);
     request.responseType = 'blob';
     request.onload = function () {
       var reader = new FileReader();
-      console.log(request.response);
-      reader.readAsDataURL(request.response);
+      console.log(typeof request.response);
+      reader.readAsDataURL(request.response as Blob);
       reader.onload = function (e) {
         console.log('DataURL:', e.target!.result);
         img = e.target!.result as string;
+        let agregados: { text: string }[] = [];
+        historia.dinamicos.forEach((dinamico) => {
+          console.log(dinamico);
+          agregados.push({
+            text: dinamico.clave + ': ' + dinamico.valor,
+          });
+        });
         const data: TDocumentDefinitions = {
           content: [
+            {
+              text:
+                'Historia clínica de: ' +
+                usuario.nombre +
+                ' ' +
+                usuario.apellido,
+              style: 'header2',
+            },
             {
               image: img,
               width: 150,
             },
+            {
+              text:
+                'Fecha de emisión: ' +
+                new Date(Date.now()).toLocaleDateString(),
+              style: 'header',
+            },
+            {
+              text: 'Altura: ' + historia.altura.toString(),
+            },
+            {
+              text: 'Peso: ' + historia.peso.toString(),
+            },
+            {
+              text: 'Temperatura: ' + historia.temperatura.toString(),
+            },
+            {
+              text: 'Presion: ' + historia.presion.toString(),
+            },
+            {
+              text: 'Diagnósticos: ',
+              style: 'header',
+            },
+            agregados!,
           ],
+          styles: {
+            header: {
+              bold: true,
+              fontSize: 15,
+              alignment: 'center',
+              margin: 5,
+            },
+            header2: {
+              bold: true,
+              fontSize: 20,
+              alignment: 'center',
+              margin: 2,
+            },
+          },
+          defaultStyle: {
+            alignment: 'center',
+            fontSize: 12,
+          },
         };
+
         pdfMake.createPdf(data).download();
       };
     };

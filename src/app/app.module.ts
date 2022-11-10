@@ -38,6 +38,7 @@ import { AgregarHistoriaComponent } from './components/historias/agregar-histori
 import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-usuarios.component';
 import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
 import { MiHistoriaComponent } from './components/historias/mi-historia/mi-historia.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import { MiHistoriaComponent } from './components/historias/mi-historia/mi-histo
     CommonModule,
     FormsModule,
     IngresoModule,
+    BrowserAnimationsModule,
     UtilsModule,
     SweetAlert2Module.forRoot(),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

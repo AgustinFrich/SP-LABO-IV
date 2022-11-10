@@ -5,6 +5,7 @@ import {
   doc,
   documentId,
   Firestore,
+  getDoc,
   getDocs,
   setDoc,
   updateDoc,
@@ -12,6 +13,7 @@ import {
 import { collection, query, where } from '@firebase/firestore';
 import { Especialidad } from '../classes/especialidad';
 import { Especialista } from '../classes/especialista';
+import { HistoriaClinica } from '../classes/historia-clinica';
 import { Horario } from '../classes/horario';
 import { Paciente } from '../classes/paciente';
 import { Turno } from '../classes/turno';
@@ -101,5 +103,22 @@ export class TurnosService {
     tunro.aceptado = true;
     tunro.estado = 'Aceptado';
     updateDoc(ref, { ...tunro });
+  }
+
+  traerTurnoConHistoriaSegunEspecialista(
+    paciente: Paciente,
+    especialista: Especialista
+  ) {
+    let turnos: Turno[];
+
+    this.getMisTurnos(paciente as Usuario).forEach((data) => {
+      turnos = data as Turno[];
+    });
+  }
+
+  async getHistoria(idHistria: any) {
+    const d = doc(this.fs, 'historias/' + idHistria.id);
+    const r = await getDoc(d);
+    return r.data() as HistoriaClinica;
   }
 }
