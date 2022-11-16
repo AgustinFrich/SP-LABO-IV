@@ -117,6 +117,21 @@
           </button>
         </div>
       </div>
+      <br />
+      <hr />
+      <h1>Descargar turnos segun especialista</h1>
+      <div class="d-flex" style="vertical-align: middle; flex-wrap: wrap">
+        <div *ngFor="let e of especialistasFiltrados" class="boton">
+          <h6 style="text-align: center" class="mt-2">{{ e.nombre }}</h6>
+          <img
+            src="{{ e.imgPerfil }}"
+            alt="{{ e.nombre }}"
+            width="100%"
+            (click)="descargarSegunProfesional(e)"
+          />
+        </div>
+      </div>
+
       <div style="height: 200px"></div>
     </div>
   </div>

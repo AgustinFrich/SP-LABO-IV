@@ -121,4 +121,17 @@ export class TurnosService {
     const r = await getDoc(d);
     return r.data() as HistoriaClinica;
   }
+
+  getMistTurnosSegunProfesional(
+    paciente: Paciente,
+    especialista: Especialista
+  ) {
+    const col = collection(this.fs, 'Turnos');
+    const q = query(
+      col,
+      where('paciente.mail', '==', paciente.mail),
+      where('especialista.mail', '==', especialista.mail)
+    );
+    return collectionData(q);
+  }
 }

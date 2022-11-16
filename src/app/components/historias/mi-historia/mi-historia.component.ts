@@ -9,7 +9,12 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class MiHistoriaComponent implements OnInit {
   @Input() historia?: HistoriaClinica;
+  mostrar = false;
   constructor(public auth: AuthService) {}
 
   ngOnInit(): void {}
+
+  cambio() {
+    this.mostrar = !this.mostrar;
+  }
 }

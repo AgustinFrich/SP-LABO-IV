@@ -1,0 +1,28 @@
+.favAgus {
+  border-radius: 50%;
+}
+
+.favImg {
+  object-fit: contain;
+  cursor: pointer;
+}
+
+.filter {
+  vertical-align: middle;
+  height: 90px;
+  background: linear-gradient(to top, #3204fdba, #9907facc);
+}
+
+.filter:hover {
+  vertical-align: middle;
+  height: 90px;
+  background: linear-gradient(to top, #1f02a0ba, #bd5bffcc);
+}
+
+img {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}

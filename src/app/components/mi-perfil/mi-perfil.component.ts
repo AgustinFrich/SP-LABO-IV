@@ -12,7 +12,11 @@ import { Paciente } from 'src/app/classes/paciente';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { Especialista } from 'src/app/classes/especialista';
+import { Turno } from 'src/app/classes/turno';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+import * as XLSX from 'xlsx';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -24,7 +28,8 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
     public auth: AuthService,
     private _route: ActivatedRoute,
     private turnosService: TurnosService,
-    private hs: HistoriasClinicasService
+    private hs: HistoriasClinicasService,
+    private service: UtilsService
   ) {}
   usr: Usuario | any;
   //  private _routerSubscription: any;
@@ -36,6 +41,7 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   hora: number = 0;
   minuto: number = 0;
   historia?: HistoriaClinica;
+  especialistasFiltrados: Especialista[] = [];
   ngOnInit(): void {
     //this._routerSubscription = this._route.url.subscribe((url) => {
     // Your action/function will go here
@@ -46,6 +52,14 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
         console.log(h);
       });
     }
+
+    this.service.getEspecialistas().subscribe((doc) => {
+      const especialistas = doc as Especialista[];
+      this.especialistasFiltrados = especialistas.filter((e: Especialista) => {
+        return e.aprobado;
+      });
+    });
+
     this.usr = this.auth.usuario;
     this.unsub = this.auth.usuarioCambio$.subscribe((usr) => {
       if (usr !== null) {
@@ -172,5 +186,51 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
       };
     };
     request.send();
+  }
+
+  descargarSegunProfesional(especialista: Especialista) {
+    this.turnosService
+      .getMistTurnosSegunProfesional(
+        this.auth.usuario as Paciente,
+        especialista
+      )
+      .forEach((d) => {
+        let data = d as any[];
+        data.forEach((data: any) => {
+          data.especialidad = data.especialidad.nombre;
+          data.especialista = data.especialista.nombre;
+          delete data.dinamicos;
+          delete data.idHistoria;
+          delete data.id;
+          delete data.paciente;
+          delete data.finalizar;
+          data.horario =
+            data.horario.dia +
+            '/' +
+            data.horario.mes +
+            ' - ' +
+            data.horario.hora +
+            ':' +
+            data.horario.minuto;
+        });
+
+        const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+        const book: XLSX.WorkBook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(
+          book,
+          worksheet,
+          especialista.nombre + ' ' + especialista.apellido
+        );
+
+        XLSX.writeFile(
+          book,
+          'Mis turnos segun' +
+            especialista.nombre +
+            ' ' +
+            especialista.apellido +
+            '.xlsx'
+        );
+      });
   }
 }

@@ -13,6 +13,7 @@ import {
   collectionData,
   docData,
   getDocs,
+  Timestamp,
 } from '@angular/fire/firestore';
 import { Especialista } from './../classes/especialista';
 import { Injectable } from '@angular/core';
@@ -127,6 +128,11 @@ export class AuthService {
           }
         });
         if (this.usuario !== null) {
+          const c = collection(this.fs, 'ingresos');
+          addDoc(c, {
+            usuario: this.usuario.nombre + ' ' + this.usuario.apellido,
+            momento: Timestamp.fromDate(new Date(Date.now())),
+          });
           this.emitChangeSource.next(this.usuario);
           if (this.usuario.perfil === 'Especialista') {
             if (user.emailVerified && this.usuario.aprobado) {

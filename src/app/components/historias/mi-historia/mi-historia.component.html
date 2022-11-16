@@ -1,25 +1,40 @@
 <div *ngIf="historia">
   <div class="card">
-    <div *ngIf="auth.usuario">
-      <h3 *ngIf="auth.usuario!.perfil !== 'Paciente'" class="mt-2">
-        {{
-          "Historia de " +
-            historia.paciente.nombre +
-            " " +
-            historia.paciente.apellido
-        }}
+    <div class="d-flex" style="vertical-align: middle">
+      <div class="filter favImg favAgus">
+        <img
+          class="favImg favAgus"
+          style="vertical-align: middle; height: 70px; margin: 10px"
+          src="{{ historia.paciente.imgPerfil }}"
+          (click)="cambio()"
+        />
+      </div>
+      <h3 style="height: 40px; margin: auto">
+        {{ historia.paciente.nombre + " " + historia.paciente.apellido }}
       </h3>
     </div>
-    <h5 class="mt-2">Datos del paciente:</h5>
-    <div class="row p-0">
-      <p class="col-6">{{ historia.altura + " cm." }}</p>
-      <p class="col-6">{{ historia.peso + " kg." }}</p>
-      <p class="col-6">{{ historia.temperatura + "ºC" }}</p>
-      <p class="col-6">{{ historia.presion + " PA" }}</p>
-    </div>
-    <h5 class="mt-2">Diagnósticos guardados:</h5>
-    <div *ngFor="let d of historia.dinamicos">
-      <p>{{ d.clave + ": " + d.valor }}</p>
+    <div *ngIf="mostrar">
+      <div *ngIf="auth.usuario">
+        <h3 *ngIf="auth.usuario!.perfil !== 'Paciente'" class="mt-2">
+          {{
+            "Historia de " +
+              historia.paciente.nombre +
+              " " +
+              historia.paciente.apellido
+          }}
+        </h3>
+      </div>
+      <h5 class="mt-2">Datos del paciente:</h5>
+      <div class="row p-0">
+        <p class="col-6">{{ historia.altura + " cm." }}</p>
+        <p class="col-6">{{ historia.peso + " kg." }}</p>
+        <p class="col-6">{{ historia.temperatura + "ºC" }}</p>
+        <p class="col-6">{{ historia.presion + " PA" }}</p>
+      </div>
+      <h5 class="mt-2">Diagnósticos guardados:</h5>
+      <div *ngFor="let d of historia.dinamicos">
+        <p>{{ d.clave + ": " + d.valor }}</p>
+      </div>
     </div>
   </div>
 </div>

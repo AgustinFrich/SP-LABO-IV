@@ -39,6 +39,7 @@ import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-
 import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
 import { MiHistoriaComponent } from './components/historias/mi-historia/mi-historia.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
     provideFirebaseApp(() => initializeApp(environment.firebase, 'Secondary')),
+    NgChartsModule,
   ],
   exports: [],
   providers: [

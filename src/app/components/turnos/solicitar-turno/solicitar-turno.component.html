@@ -15,15 +15,13 @@
     <h3 class="mt-2">Paso 2. Elija a su especialista</h3>
     <div class="d-flex" style="vertical-align: middle; flex-wrap: wrap">
       <div *ngFor="let e of especialistasFiltrados" class="boton">
-        <div *ngIf="e.aprobado">
-          <h6 style="text-align: center" class="mt-2">{{ e.nombre }}</h6>
-          <img
-            src="{{ e.imgPerfil }}"
-            alt="{{ e.nombre }}"
-            width="100%"
-            (click)="elegirEspecialista(e)"
-          />
-        </div>
+        <h6 style="text-align: center" class="mt-2">{{ e.nombre }}</h6>
+        <img
+          src="{{ e.imgPerfil }}"
+          alt="{{ e.nombre }}"
+          width="100%"
+          (click)="elegirEspecialista(e)"
+        />
       </div>
     </div>
     <div [hidden]="horarios === null && especialista === null">
