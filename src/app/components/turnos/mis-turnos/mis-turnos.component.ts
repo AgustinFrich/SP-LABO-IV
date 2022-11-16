@@ -1,3 +1,4 @@
+import { HistoriaClinica } from './../../../classes/historia-clinica';
 import { Paciente } from './../../../classes/paciente';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -212,6 +213,7 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
         this.turnosFiltrados.push(t);
     });
   }
+  /*
   async filtrarPorPeso($event: any) {
     this.filtradoPor = 'Peso: ' + $event.target.value;
     this.turnosFiltrados = [];
@@ -239,16 +241,62 @@ export class MisTurnosComponent implements OnInit, OnDestroy {
         this.turnosFiltrados.push(t);
     });
   }
+  
   async filtrarPorClave($event: any) {
     this.filtradoPor = 'Clave: ' + $event.target.value;
     this.turnosFiltrados = this.turnos.filter((t) => {
       return t.dinamicos.clave === $event.target.value;
     });
   }
+  */
   async filtrarPorValor($event: any) {
-    this.filtradoPor = 'Valor: ' + $event.target.value;
-    this.turnosFiltrados = this.turnos.filter((t) => {
-      return t.dinamicos.valor === $event.target.value;
+    this.turnosFiltrados = [];
+    this.turnos.forEach(async (t) => {
+      let h = await this.turnosService.getHistoria(t.idHistoria);
+      if (
+        t.dinamicos.valor === $event.target.value ||
+        t.dinamicos.clave === $event.target.value ||
+        h.presion.toString() === $event.target.value ||
+        h.temperatura.toString() === $event.target.value ||
+        h.peso.toString() === $event.target.value ||
+        h.altura.toString() === $event.target.value
+      )
+        this.turnosFiltrados.push(t);
     });
+
+    /*
+    this.turnosFiltrados = this.turnos.filter((t) => {
+      let h: HistoriaClinica;
+      this.turnosService.getHistoria(t.idHistoria).then((gs) => {
+        h = gs;
+      });
+
+      console.log(
+        t.dinamicos.valor,
+        t.dinamicos.clave,
+        h.presion.toString(),
+        h.temperatura.toString(),
+        h.peso.toString(),
+        h.altura.toString()
+      );
+      console.log(
+        t.dinamicos.valor === $event.target.value ||
+          t.dinamicos.clave === $event.target.value ||
+          h.presion.toString() === $event.target.value ||
+          h.temperatura.toString() === $event.target.value ||
+          h.peso.toString() === $event.target.value ||
+          h.altura.toString() === $event.target.value
+      );
+      return (
+        t.dinamicos.valor === $event.target.value ||
+        t.dinamicos.clave === $event.target.value ||
+        h.presion.toString() === $event.target.value ||
+        h.temperatura.toString() === $event.target.value ||
+        h.peso.toString() === $event.target.value ||
+        h.altura.toString() === $event.target.value
+      );
+    });
+    console.log(this.turnosFiltrados);
+  */
   }
 }

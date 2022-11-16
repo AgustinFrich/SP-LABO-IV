@@ -1,3 +1,4 @@
+import { GraficosService } from './services/graficos.service';
 import { ChildrenOutletContexts, Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -14,7 +15,8 @@ export class AppComponent implements OnInit {
   constructor(
     private auth: AuthService,
     public loading: LoadingService,
-    private contexts: ChildrenOutletContexts
+    private contexts: ChildrenOutletContexts,
+    private graph: GraficosService
   ) {}
 
   getRouteAnimationData() {
