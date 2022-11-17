@@ -6,7 +6,11 @@
 </div>
 <div class="d-flex justify-content-center mt-2" class="algo">
   <div class="text-center row m-1" style="column-gap: 5px; row-gap: 5px">
-    <div *ngFor="let usr of usuarios" class="card col-md-4 col-xs-12 p-0">
+    <div
+      *ngFor="let usr of usuarios"
+      class="card col-md-4 col-xs-12 p-0"
+      appBorder
+    >
       <img
         class="card-img-top"
         src="{{ usr.imgPerfil }}"
@@ -19,7 +23,11 @@
         <h5>{{ usr.mail }}</h5>
         <h5>{{ usr.perfil }}</h5>
         <h6>{{ usr.edad + " años" }}</h6>
-        <h6>{{ "DNI: " + usr.dni }}</h6>
+        <h6>DNI: {{ usr.dni | dni }}</h6>
+        <hr />
+        <button class="w-100 btn btn-info" (click)="descargarTurnos(usr)">
+          Descargar turnos
+        </button>
       </div>
     </div>
   </div>

@@ -1,0 +1,38 @@
+<h4 class="text-center">Turnos solicitados por especialista</h4>
+<div class="d-flex justify-content-center m-1">
+  <input
+    [(ngModel)]="dia1"
+    style="width: 30px"
+    class="in-fecha in-fecha-der"
+  /><span>/</span>
+  <input [(ngModel)]="mes1" style="width: 30px" class="in-fecha" /><span>
+    -
+  </span>
+  <input
+    [(ngModel)]="dia2"
+    style="width: 30px"
+    class="in-fecha in-fecha-der"
+  /><span>/</span>
+  <input [(ngModel)]="mes2" style="width: 30px" class="in-fecha" />
+</div>
+<div class="d-flex justify-content-center m-1">
+  <button class="btn btn-info" (click)="buscar()">
+    Buscar turnos entre fechas
+  </button>
+</div>
+<canvas
+  baseChart
+  [datasets]="pieChartDatasets"
+  [labels]="pieChartLabels"
+  [type]="'bar'"
+  [options]="pieChartOptions"
+  [plugins]="pieChartPlugins"
+  [legend]="pieChartLegend"
+>
+</canvas>
+<div class="justify-content-center d-flex">
+  <button class="text-center btn btn-success" (click)="descargarTurnos()">
+    Descargar turnos por especialista
+  </button>
+</div>
+<div style="height: 20px"></div>

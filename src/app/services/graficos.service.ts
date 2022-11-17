@@ -18,7 +18,7 @@ export class GraficosService {
   traerTurnosPorEspecialidad(especialidad: string) {
     const c = collection(this.fs, 'Turnos');
     const q = query(c, where('especialidad.nombre', '==', especialidad));
-    return collectionData(q) as Observable<Turno[]>;
+    return collectionData(c) as Observable<Turno[]>;
   }
 
   traerTurnosPorDia(dia: string, mes: string) {
@@ -28,26 +28,18 @@ export class GraficosService {
       where('horario.dia', '==', dia),
       where('horario.mes', '==', mes)
     );
+    return collectionData(c) as Observable<Turno[]>;
+  }
+
+  traerTurnosPorMedicoEnLapso() {
+    const c = collection(this.fs, 'Turnos');
+    const q = query(c, where('realizado', '==', false));
     return collectionData(q) as Observable<Turno[]>;
   }
 
-  traerTurnosPorMedicoEnLapso(mail: string) {
+  traerTurnosRealizadosPorMedicoEnLapso() {
     const c = collection(this.fs, 'Turnos');
-    const q = query(
-      c,
-      where('especialista.mail', '==', mail),
-      where('realizado', '==', false)
-    );
-    return collectionData(q) as Observable<Turno[]>;
-  }
-
-  traerTurnosRealizadosPorMedicoEnLapso(mail: string) {
-    const c = collection(this.fs, 'Turnos');
-    const q = query(
-      c,
-      where('especialista.mail', '==', mail),
-      where('realizado', '==', true)
-    );
+    const q = query(c, where('realizado', '==', true));
     return collectionData(q) as Observable<Turno[]>;
   }
 
@@ -62,7 +54,9 @@ export class GraficosService {
     if (
       mes >= mes1 &&
       mes <= mes2 &&
-      ((dia >= dia1 && mes !== mes2) || (dia <= dia2 && mes !== mes1))
+      ((dia >= dia1 && mes !== mes2) ||
+        (dia <= dia2 && mes !== mes1) ||
+        (mes === mes1 && mes === mes2 && dia >= dia1 && dia <= dia2))
     ) {
       return true;
     }

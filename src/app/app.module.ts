@@ -40,6 +40,18 @@ import { VerHistoriasComponent } from './components/historias/ver-historias/ver-
 import { MiHistoriaComponent } from './components/historias/mi-historia/mi-historia.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgChartsModule } from 'ng2-charts';
+import { GraficosComponent } from './components/graficos/graficos.component';
+import { TurnosPorDiaComponent } from './components/graficos/turnos-por-dia/turnos-por-dia.component';
+import { TurnosPorEspecialidadComponent } from './components/graficos/turnos-por-especialidad/turnos-por-especialidad.component';
+import { LogIngresosComponent } from './components/graficos/log-ingresos/log-ingresos.component';
+import { TurnosSolicitadosComponent } from './components/graficos/turnos-solicitados/turnos-solicitados.component';
+import { TurnosFinalizadosComponent } from './components/graficos/turnos-finalizados/turnos-finalizados.component';
+import { DniPipe } from './pipes/dni.pipe';
+import { TempPipe } from './pipes/temp.pipe';
+import { AlturaPipe } from './pipes/altura.pipe';
+import { HighlightDirective } from './directives/highlight.directive';
+import { AgrandarDirective } from './directives/agrandar.directive';
+import { BorderDirective } from './directives/border.directive';
 
 @NgModule({
   declarations: [
@@ -60,6 +72,18 @@ import { NgChartsModule } from 'ng2-charts';
     TodosUsuariosComponent,
     VerHistoriasComponent,
     MiHistoriaComponent,
+    GraficosComponent,
+    TurnosPorDiaComponent,
+    TurnosPorEspecialidadComponent,
+    LogIngresosComponent,
+    TurnosSolicitadosComponent,
+    TurnosFinalizadosComponent,
+    DniPipe,
+    TempPipe,
+    AlturaPipe,
+    HighlightDirective,
+    AgrandarDirective,
+    BorderDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,17 @@
+<div class="text-center">
+  <button
+    class="text-center mb-2 me-2"
+    (click)="verLogs = !verLogs"
+    [ngClass]="verLogs ? 'btn btn-danger' : 'btn btn-success'"
+  >
+    {{ verLogs ? "Ocultar logs" : "Ver Logs" }}
+  </button>
+  <button class="text-center mb-2 btn btn-info" (click)="descargarLogs()">
+    Descargar Logs
+  </button>
+  <div *ngIf="verLogs">
+    <div *ngFor="let i of ingresos">
+      <p>{{ i.momento.toDate().toLocaleString() + ": " + i.usuario }}</p>
+    </div>
+  </div>
+</div>

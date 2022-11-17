@@ -3,7 +3,7 @@
 // LISTO
 Sección Pacientes,	"Para los especialistas. Solo deberá mostrar los usuarios que el especialista haya atendido al menos 1 vez."	
 
-//MMITAD
+//LISTO
 Mostrar los usuarios con un favbutton redondo , imagen y nombre, al seleccionar un paciente  se muestra los dellaes de los turnos y un acceso a la reseña  de cada consulta
 
 
@@ -11,7 +11,7 @@ Mostrar los usuarios con un favbutton redondo , imagen y nombre, al seleccionar 
 Sección usuarios "Solamente para el perfil Administrador, un excel con los datos de los
 usuarios."	
 
-// MITAD
+// LISTO
 Mostrar los usuarios con CARD y al seleccionarlo me descarga los datos de que turnos tomo y con quien
 
 //LISTO

@@ -17,6 +17,7 @@ import { Turno } from 'src/app/classes/turno';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 import * as XLSX from 'xlsx';
 import { UtilsService } from 'src/app/services/utils.service';
+import { DniPipe } from 'src/app/pipes/dni.pipe';
 
 @Component({
   selector: 'app-mi-perfil',
@@ -75,7 +76,6 @@ export class MiPerfilComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('A');
     this.unsub.unsubscribe();
   }
 

@@ -18,6 +18,7 @@ import { MiPerfilComponent } from './components/mi-perfil/mi-perfil.component';
 import { SeccionUsuariosComponent } from './components/seccion-usuarios/seccion-usuarios.component';
 import { TodosUsuariosComponent } from './components/admin/todos-usuarios/todos-usuarios.component';
 import { VerHistoriasComponent } from './components/historias/ver-historias/ver-historias.component';
+import { GraficosComponent } from './components/graficos/graficos.component';
 
 const routes: Routes = [
   {
@@ -56,6 +57,7 @@ const routes: Routes = [
         path: 'mi-perfil',
         component: MiPerfilComponent,
       },
+
       {
         path: 'mis-turnos',
         component: MisTurnosComponent,
@@ -97,6 +99,10 @@ const routes: Routes = [
       {
         path: 'mi-perfil',
         component: MiPerfilComponent,
+      },
+      {
+        path: 'graficos',
+        component: GraficosComponent,
       },
       {
         path: 'usuarios',

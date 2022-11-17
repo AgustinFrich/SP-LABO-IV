@@ -20,6 +20,7 @@
       </div>
     </ng-template>
     <img
+      appAgrandar
       style="
         position: absolute;
         left: 50%;
@@ -41,7 +42,7 @@
     <h5>{{ usr.mail }}</h5>
     <h5>{{ usr.perfil }}</h5>
     <h6>{{ usr.edad + " años" }}</h6>
-    <h6>{{ "DNI: " + usr.dni }}</h6>
+    <h6>DNI: {{ usr.dni | dni }}</h6>
     <!--Mis horarios-->
     <div *ngIf="usr.perfil === 'Especialista'">
       <br />
@@ -103,10 +104,10 @@
           </div>
           <h5 class="mt-2">Datos del paciente:</h5>
           <div class="row p-0">
-            <p class="col-6">{{ historia.altura + " cm." }}</p>
-            <p class="col-6">{{ historia.peso + " kg." }}</p>
-            <p class="col-6">{{ historia.temperatura + "ºC" }}</p>
-            <p class="col-6">{{ historia.presion + " PA" }}</p>
+            <p appHighlight class="col-6">{{ historia.altura | altura }}</p>
+            <p appHighlight class="col-6">{{ historia.peso + " kg." }}</p>
+            <p appHighlight class="col-6">{{ historia.temperatura | temp }}</p>
+            <p appHighlight class="col-6">{{ historia.presion + " PA" }}</p>
           </div>
           <h5 class="mt-2">Diagnósticos guardados:</h5>
           <div *ngFor="let d of historia.dinamicos">

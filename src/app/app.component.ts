@@ -30,5 +30,10 @@ export class AppComponent implements OnInit {
     // setTimeout(() => {
     this.auth.Cambio();
     // }, 3000)
+    console.log(this.graph.compararFechas(11, 11, 10, 20, 11, 11)); // TRUE
+    console.log(this.graph.compararFechas(10, 11, 10, 20, 11, 11)); // TRUE
+    console.log(this.graph.compararFechas(20, 11, 10, 20, 11, 11)); // TRUE
+    console.log(this.graph.compararFechas(1, 11, 10, 20, 11, 11)); // FALSE
+    console.log(this.graph.compararFechas(21, 11, 10, 20, 11, 11)); // FALSE
   }
 }

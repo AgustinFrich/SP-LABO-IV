@@ -1,0 +1,17 @@
+<h4 class="text-center">Turnos por día</h4>
+<canvas
+  baseChart
+  [datasets]="pieChartDatasets"
+  [labels]="pieChartLabels"
+  [type]="'bar'"
+  [options]="pieChartOptions"
+  [plugins]="pieChartPlugins"
+  [legend]="pieChartLegend"
+>
+</canvas>
+<div class="justify-content-center d-flex">
+  <button class="text-center btn btn-success" (click)="descargarTurnos()">
+    Descargar turnos por dia
+  </button>
+</div>
+<div style="height: 20px"></div>
